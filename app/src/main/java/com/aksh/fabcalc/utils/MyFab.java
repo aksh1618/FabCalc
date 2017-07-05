@@ -1,10 +1,8 @@
 package com.aksh.fabcalc.utils;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
@@ -63,9 +61,6 @@ public class MyFab extends FloatingActionButton {
     @Override
     public void setImageDrawable(@Nullable Drawable drawable) {
         super.setImageDrawable(drawable);
-        if (drawable instanceof TextDrawable) {
-            drawableText = ((TextDrawable) drawable).getText();
-        }
     }
 
     private void initCustoms(AttributeSet attributeSet){
@@ -81,6 +76,6 @@ public class MyFab extends FloatingActionButton {
     }
 
     private Drawable getTextDrawableFromText(String text) {
-        return new Drawables(mContext).getTextDrawable(text);
+        return new DrawableUtils(mContext).getTextDrawable(text);
     }
 }

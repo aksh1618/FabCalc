@@ -26,8 +26,6 @@ import com.aksh.fabcalc.utils.States;
 
 public class MainActivity extends AppCompatActivity {
 
-//    private final String STATE_KEY = "state";
-
     ActivityMainBinding calc;
     BasicCalcKeysBinding keys;
     CalcDisplayBinding display;
@@ -46,11 +44,7 @@ public class MainActivity extends AppCompatActivity {
             mainLayout = calc.mainConstraintLayout;
         }
         calcState = States.BASIC;
-        // TODO: 22-06-2017 Is This necessary?
-//        calcState = savedInstanceState.containsKey(STATE_KEY)
-//                ? (States) savedInstanceState.get(STATE_KEY) : States.BASIC;
 
-        // TODO: 16-06-2017 Check if still needed
         initArrays(this);
         applyLabels(keys.basicGridLayout, calcState);
 
@@ -69,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setListeners() {
-//        calc.calcOperationsCardView.setOnTouchListener(new OnSwipeTouchListener(this){
         keys.basicGridLayout.setOnTouchListener(new OnSwipeTouchListener(this){
             @Override
             public boolean onSwipe() {
@@ -77,24 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        // FIXME: 27-06-2017 Is this too heavy?
-//        int childCount = keys.basicGridLayout.getChildCount();
-//        for (int i = 0; i < childCount; i++) {
-//            final View child = keys.basicGridLayout.getChildAt(i);
-//            child.setOnTouchListener(new OnSwipeTouchListener(this) {
-//                        @Override
-//                        public void onClick() {
-//                            onKeyPressed(child);
-//                        }
-//
-//                        @Override
-//                        public boolean onSwipe() {
-//                            toggleState();
-//                            return true;
-//                        }
-//                    });
-//        }
 
         keys.myFab4.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -170,8 +145,6 @@ public class MainActivity extends AppCompatActivity {
 }
 
 // TODO: 22-06-2017 Animations Speed is set faster on rn4, so check speeds on some other device.
-// TODO: 20-06-2017 Maybe put an extra button instead of backspace, merge it with AC, like google
-// calculator
 // TODO: 16-06-2017 BottomBar
 // TODO: 16-06-2017 History
 // TODO: 20-06-2017 Settings :
@@ -188,60 +161,3 @@ public class MainActivity extends AppCompatActivity {
 // TODO: 22-06-2017 Calcs :
 // triangle calc: triangle with edit texts as sides and angles, basic input keys; animation maybe
 //                upper white expands and triangle appears and keyboard shrinks
-
-// Keyboard Disable Alternatives:
-
-//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
-
-//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
-
-//        myEditText.setOnTouchListener(new View.OnTouchListener(){
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-
-//                return true;
-//            }
-//        });
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            myEditText.setShowSoftInputOnFocus(false);
-//        } else {
-//            try {
-//                final Method method = EditText.class.getMethod(
-//                        "setShowSoftInputOnFocus"
-//                        , boolean.class);
-//                method.setAccessible(true);
-//                method.invoke(myEditText, false);
-//            } catch (Exception e) {
-//                // ignore
-//            }
-//        }
-
-// onOptionsSelected earlier attempts:
-
-//        MyFab fab;
-//        int childCount = keys.basicGridLayout.getChildCount();
-//        for (int i=0; i<childCount; i++) {
-//            fab = (MyFab) keys.basicGridLayout.getChildAt(i);
-//            fab.setDrawableText("YO");
-////            fab.setScaleX(0f);
-////            fab.setScaleY(0f);
-//        }
-//        revealFromCenter(calc.calcOperationsCardView);
-//        calc.calcOperationsCardView.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                revealFromCenter(calc.calcOperationsCardView);
-//            }
-//        });
-//        animateButtonsIn(keys.basicGridLayout);
-
-//    @Override
-//    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-//        outState.putSerializable(STATE_KEY, calcState);
-//        super.onSaveInstanceState(outState, outPersistentState);
-//    }

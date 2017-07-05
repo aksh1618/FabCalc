@@ -7,17 +7,18 @@ import android.graphics.Typeface;
 import android.support.v4.content.res.ResourcesCompat;
 
 import com.aksh.fabcalc.R;
+import com.amulyakhare.textdrawable.TextDrawable;
 
 /**
  * Created by Aakarshit on 16-06-2017.
  */
 
-public class Drawables {
+public class DrawableUtils {
 
     private TextDrawable.IShapeBuilder mBuilder;
     private Context mContext;
 
-    public Drawables(Context context) {
+    public DrawableUtils(Context context) {
         mContext = context;
         Resources res = mContext.getResources();
         mBuilder = TextDrawable.builder()
@@ -29,7 +30,7 @@ public class Drawables {
                 .endConfig();
     }
 
-    public Drawables(Context context, TextDrawable.IShapeBuilder builder) {
+    public DrawableUtils(Context context, TextDrawable.IShapeBuilder builder) {
         mContext = context;
         mBuilder = builder;
     }
