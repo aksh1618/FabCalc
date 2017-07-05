@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/basic_grid_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:columnCount="4"
+        app:rowCount="5"
+        android:padding="10dp"
+        android:layout_gravity="center">
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab1"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab2"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab3"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab4"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab5"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab6"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab7"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab8"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab9"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab10"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab11"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab12"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab13"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab14"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab15"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab16"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab17"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab18"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab19"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+        <com.aksh.fabcalc.utils.MyFab
+            android:id="@+id/myFab20"
+            style="@style/FabStyleBelow21"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"/>
+
+    </android.support.v7.widget.GridLayout>
+</layout>

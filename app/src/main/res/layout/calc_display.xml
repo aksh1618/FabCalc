@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/calc_display_linear_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp">
+
+        <com.autofit.et.lib.AutoFitEditText
+            android:id="@+id/input_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:background="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorPrimary"
+            android:textAlignment="viewEnd"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:isScrollContainer="false"
+            android:gravity="end|bottom"
+            android:textSize="70sp"
+            android:maxLines="4"
+            android:hint="@string/key_num_zero" />
+
+        <TextView
+            android:id="@+id/result_text_view"
+            android:background="@color/colorAccent"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:textColor="@color/colorPrimaryDark"
+            android:textAlignment="viewEnd"
+            android:gravity="end|center"
+            android:textSize="20sp"
+            android:text="@string/key_num_zero" />
+
+    </LinearLayout>
+</layout>

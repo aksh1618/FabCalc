@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--FIXME: This goes out of screen, either revert back to constraint,
+    try FlexBox Layout (https://github.com/google/flexbox-layout),
+    or not allow this at all? Maybe remove options bar and make a
+    special layout, which would be allowed in this case. That may
+    not be required if we are gonna use the scenes feature of
+    material animations package.-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <GridLayout
+        android:id="@+id/main_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00757575"
+        tools:context="com.aksh.fabcalc.MainActivity"
+        android:rowCount="2"
+        android:columnCount="3">
+
+        <io.codetail.widget.RevealFrameLayout
+            android:id="@+id/display_reveal"
+            android:layout_height="120dp"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:layout_gravity="fill_horizontal">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/calc_display_card_view"
+                style="@style/CardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/colorAccent"
+                app:cardElevation="2dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
+
+                <include
+                    android:id="@+id/display"
+                    layout="@layout/calc_display" />
+
+            </android.support.v7.widget.CardView>
+        </io.codetail.widget.RevealFrameLayout>
+
+        <io.codetail.widget.RevealFrameLayout
+            android:id="@+id/additional_operations_reveal"
+            android:layout_rowSpan="1"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:paddingLeft="2dp"
+            android:paddingStart="2dp"
+            android:layout_gravity="fill">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/calc_additional_operations_card_view"
+                style="@style/CardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardElevation="2dp"
+                app:cardPreventCornerOverlap="false">
+
+                <include layout="@layout/basic_calc_keys"
+                android:id="@+id/keys2"/>
+
+            </android.support.v7.widget.CardView>
+        </io.codetail.widget.RevealFrameLayout>
+
+        <io.codetail.widget.RevealFrameLayout
+            android:id="@+id/operations_reveal"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_columnSpan="1"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:layout_gravity="fill">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/calc_operations_card_view"
+                style="@style/CardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardElevation="2dp"
+                app:cardPreventCornerOverlap="false">
+
+                <include layout="@layout/basic_calc_keys"
+                android:id="@+id/keys"/>
+
+            </android.support.v7.widget.CardView>
+        </io.codetail.widget.RevealFrameLayout>
+
+        <io.codetail.widget.RevealFrameLayout
+            android:id="@+id/bottombar_reveal"
+            android:layout_width="56dp"
+            android:layout_rowSpan="2"
+            android:layout_column="2"
+            android:layout_row="0">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/calc_bottombar_card_view"
+                style="@style/CardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/colorAccent"
+                app:cardElevation="2dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
+
+                <include layout="@layout/calc_options"
+                    android:id="@+id/options"/>
+
+            </android.support.v7.widget.CardView>
+        </io.codetail.widget.RevealFrameLayout>
+    </GridLayout>
+</layout>
+
+<!--<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:rowCount="2"-->
+    <!--android:columnCount="3">-->
+
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:id="@+id/cv1"-->
+        <!--style="@style/CardView"-->
+        <!--android:layout_column="0"-->
+        <!--android:layout_columnSpan="2"-->
+        <!--android:layout_gravity="fill_horizontal">-->
+        <!---->
+        <!--<include layout="@layout/calc_display"-->
+            <!--android:id="@+id/display"/>-->
+
+    <!--</android.support.v7.widget.CardView>-->
+    <!---->
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:id="@+id/cv2"-->
+        <!--android:layout_row="1"-->
+        <!--android:layout_column="0">-->
+        <!---->
+        <!--<include layout="@layout/basic_calc_keys"/>-->
+    <!---->
+    <!--</android.support.v7.widget.CardView>-->
+    <!---->
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:id="@+id/cv3"-->
+        <!--android:layout_row="1"-->
+        <!--android:layout_column="1">-->
+        <!---->
+        <!--<include layout="@layout/basic_calc_keys"/>-->
+
+    <!--</android.support.v7.widget.CardView>-->
+    <!---->
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="56dp"-->
+        <!--android:id="@+id/cv4"-->
+        <!--android:layout_rowSpan="2"-->
+        <!--android:layout_column="2"-->
+        <!--android:layout_row="0">-->
+        <!---->
+        <!--<include layout="@layout/calc_options"/>-->
+    <!---->
+    <!--</android.support.v7.widget.CardView>-->
+
+<!--</GridLayout>-->

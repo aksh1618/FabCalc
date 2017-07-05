@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">Fab Calc</string>
+
+    <!--Keys Begin-->
+
+    <!--Number Keys Begin-->
+    <string name="key_num_zero">0</string>
+    <string name="key_num_one">1</string>
+    <string name="key_num_two">2</string>
+    <string name="key_num_three">3</string>
+    <string name="key_num_four">4</string>
+    <string name="key_num_five">5</string>
+    <string name="key_num_six">6</string>
+    <string name="key_num_seven">7</string>
+    <string name="key_num_eight">8</string>
+    <string name="key_num_nine">9</string>
+    <!--Number Keys End-->
+
+    <!--Basic Keys Begin-->
+    <string name="key_plus">+</string>
+    <string name="key_minus">-</string>
+    <string name="key_divide">÷</string>
+    <string name="key_multiply">x</string>
+    <string name="key_equal">=</string>
+    <string name="key_clear">C</string>
+    <!--TODO: Replace backspace with % and add logic to use Clear button as backspace till one digit left-->
+    <string name="key_percentage">%</string>
+    <!--<string name="key_backspace">[X]</string>-->
+    <!--<string name="key_backspace">&lt;X</string>-->
+    <string name="key_point">.</string>
+    <string name="key_paren_open">(</string>
+    <string name="key_paren_close">)</string>
+    <!--Basic Keys End-->
+
+    <!--Advanced Keys Begin-->
+    <string name="key_degree">°</string>
+    <string name="key_sin">sin</string>
+    <string name="key_cos">cos</string>
+    <string name="key_tan">tan</string>
+    <string name="key_asin">asin</string>
+    <string name="key_acos">acos</string>
+    <string name="key_atan">atan</string>
+    <string name="key_sqrt">√</string>
+    <string name="key_square">^2</string>
+    <string name="key_cube">^3</string>
+    <string name="key_exponent">^</string>
+    <string name="key_log_natural">ln</string>
+    <string name="key_log_base_10">log</string>
+    <string name="key_log_base_b">logb</string>
+    <string name="key_euler">e</string>
+    <string name="key_factorial">!</string>
+    <string name="key_pi">π</string>
+    <!--Advanced Keys End-->
+
+    <!--Keys End-->
+
+</resources>
