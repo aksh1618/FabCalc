@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<!--TODO: Convert LinearLayout to RevealLinearLayout and remove RevealFrameLayouts-->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -75,6 +75,7 @@
                     android:id="@+id/options"/>
 
             </android.support.v7.widget.CardView>
+
         </io.codetail.widget.RevealFrameLayout>
     </LinearLayout>
 </layout>

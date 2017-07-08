@@ -5,9 +5,17 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="preferenceTheme">@style/PreferenceTheme</item>
         <!--<item name="android:windowBackground">@android:color/transparent</item>-->
         <!--<item name="android:windowIsTranslucent">true</item>-->
         <!--<item name="android:background">#0FBDBDBD</item>-->
+    </style>
+
+    <style name="PreferenceTheme" parent="PreferenceThemeOverlay">
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/colorAccent</item>
+        <item name="android:listDivider">@color/colorAccent</item>
+        <!--<item name="android:dividerHeight">1dp</item>-->
     </style>
 
     <!--<style name="FabStyle" parent="Widget.Design.FloatingActionButton">-->

@@ -53,5 +53,22 @@
     <!--Advanced Keys End-->
 
     <!--Keys End-->
+    
+    <!--Settings Begin-->
+
+    <!--Degree Setting-->
+    <string name="pref_degrees_key" translatable="false">use_degrees</string>
+    <string name="pref_degrees_label">Angles in degrees</string>
+    <string name="pref_degrees_true">Always</string>
+    <string name="pref_degrees_false">When suffixed with °</string>
+
+    <!--History Setting-->
+    <string name="pref_history_key" translatable="false">enable_history</string>
+    <string name="pref_history_label">History</string>
+    <string name="pref_history_true">Enabled</string>
+    <string name="pref_history_false">Disabled</string>
+
+    <!--Settings End-->
+    
 
 </resources>

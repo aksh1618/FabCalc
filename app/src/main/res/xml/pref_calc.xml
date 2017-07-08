@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="General">
+        <CheckBoxPreference
+            android:defaultValue="@bool/pref_degrees_default"
+            android:key="@string/pref_degrees_key"
+            android:summaryOff="@string/pref_degrees_false"
+            android:summaryOn="@string/pref_degrees_true"
+            android:title="@string/pref_degrees_label" />
+    </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="History">
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/pref_history_default"
+            android:key="@string/pref_history_key"
+            android:summaryOff="@string/pref_history_false"
+            android:summaryOn="@string/pref_history_true"
+            android:title="@string/pref_history_label"/>
+<!--TODO: define res-->
+        <CheckBoxPreference
+            android:dependency="@string/pref_history_key"
+            android:key="store_invalid"
+            android:defaultValue="false"
+            android:title="Invalid Expressions"
+            android:summaryOn="Included"
+            android:summaryOff="Excluded"/>
+
+    </PreferenceCategory>
+        <!--<ListPreference-->
+            <!--android:key="number_of_entries"-->
+            <!--android:entries=""-->
+            <!--android:entryValues=""-->
+            <!--android:defaultValue="2"/>-->
+
+    <!--</PreferenceScreen>-->
+
+
+</PreferenceScreen>

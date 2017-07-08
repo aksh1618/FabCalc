@@ -9,6 +9,7 @@ import static com.aksh.fabcalc.utils.ClickListeners.onKeyClicked;
 import static com.aksh.fabcalc.utils.LabelsLists.applyLabels;
 import static com.aksh.fabcalc.utils.LabelsLists.initArrays;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -87,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        for(int i=0; i<mainLayout.getChildCount(); i++) {
+        int childCount = mainLayout.getChildCount();
+        for(int i=0; i<childCount; i++) {
             FrameLayout frameLayout = ((FrameLayout) mainLayout.getChildAt(i));
             final View myView = frameLayout.getChildAt(0);
             myView.post(new Runnable() {
@@ -134,19 +135,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onOptionPressed(View view) {
-        if (calcState == States.BASIC) {
-            switchToState(States.ADVANCED);
-            calc.options.statusTextView.setText("<- BASIC");
-        } else {
-            switchToState(States.BASIC);
-            calc.options.statusTextView.setText("ADVANCED");
+        if (view.getId() == R.id.status_text_view) {
+            if (calcState == States.BASIC) {
+                switchToState(States.ADVANCED);
+                calc.options.statusTextView.setText("<- BASIC");
+            } else {
+                switchToState(States.BASIC);
+                calc.options.statusTextView.setText("ADVANCED");
+            }
+        } else if (view.getId() == R.id.settings_text_view){
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
         }
     }
 }
 
 // TODO: 22-06-2017 Animations Speed is set faster on rn4, so check speeds on some other device.
-// TODO: 16-06-2017 BottomBar
-// TODO: 16-06-2017 History
+// TODO: 16-06-2017 BottomBar : Can be hidden from settings, available on swipe up
+// TODO: 16-06-2017 History : Accessible from bottom bar ?
 // TODO: 20-06-2017 Settings :
 // - clear on equate? (pressing equal and then typing something else doesn't do anything)
 // - separation commas?
@@ -161,3 +167,7 @@ public class MainActivity extends AppCompatActivity {
 // TODO: 22-06-2017 Calcs :
 // triangle calc: triangle with edit texts as sides and angles, basic input keys; animation maybe
 //                upper white expands and triangle appears and keyboard shrinks
+// imaginary operations:
+// equations:
+// matrix
+// graphs
