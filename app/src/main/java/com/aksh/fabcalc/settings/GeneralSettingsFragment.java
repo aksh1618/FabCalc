@@ -1,4 +1,4 @@
-package com.aksh.fabcalc;
+package com.aksh.fabcalc.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.widget.Toast;
 
+import com.aksh.fabcalc.R;
 import com.aksh.fabcalc.history.HistoryContract;
 import com.aksh.fabcalc.utils.CalculationUtils;
 

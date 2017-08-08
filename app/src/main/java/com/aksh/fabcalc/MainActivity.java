@@ -190,20 +190,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         applyColors();
         applyLabels(keys.basicGridLayout, calcState);
-//        int childCount = mainLayout.getChildCount();
-//        for(int i=0; i<childCount; i++) {
-//            if (mainLayout.getChildAt(i) instanceof RecyclerView) {
-//                continue;
-//            }
-//            FrameLayout frameLayout = ((FrameLayout) mainLayout.getChildAt(i));
-//            final View myView = frameLayout.getChildAt(0);
-//            myView.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    revealFromCenter(myView);
-//                }
-//            });
-//        }
         calc.displayCardView.post(new Runnable() {
             @Override
             public void run() {
@@ -227,27 +213,11 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO: 15-07-2017 This should be called only if preference has been changed?
     private void applyColors() {
-//        int primaryColor = getResources().getColor(Colorful.getThemeDelegate().getPrimaryColor().getColorRes());
-//        int accentColor = getResources().getColor(Colorful.getThemeDelegate().getAccentColor().getColorRes());
-//        int textColor = Colorful.getThemeDelegate().getAccentColor() == Colorful.ThemeColor.WHITE ?
-//                primaryColor : Color.WHITE;
         calc.setColors(ColorUtils.currentColors);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ColorUtils.currentColors.getPrimaryColorDark());
             getWindow().setNavigationBarColor(ColorUtils.currentColors.getPrimaryColorDark());
         }
-//        calc.operationsCardView.setCardBackgroundColor(primaryColor);
-//        calc.displayCardView.setCardBackgroundColor(accentColor);
-//        calc.navbarCardView.setCardBackgroundColor(accentColor);
-//        keys.myFab4.setRippleColor(accentColor);
-//        display.inputEditText.setTextColor(textColor);
-//        display.inputEditText.setHintTextColor(textColor);
-//        display.resultTextView.setTextColor(textColor);
-//        calc.options.bottombar.setItemIconTintList(ColorStateList.valueOf(textColor));
-//        calc.options.bottombar.setItemTextColor(ColorStateList.valueOf(textColor));
-//        calc.historyRecyclerView.setBackgroundColor(accentColor);
-//        calc.options.statusTextView.setTextColor(textColor);
-//        calc.options.settingsTextView.setTextColor(textColor);
     }
 
     @Override

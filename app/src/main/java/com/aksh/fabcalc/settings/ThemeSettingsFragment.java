@@ -1,7 +1,9 @@
-package com.aksh.fabcalc;
+package com.aksh.fabcalc.settings;
 
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;
+
+import com.aksh.fabcalc.R;
 
 /**
  * Created by Aakarshit on 23-07-2017.

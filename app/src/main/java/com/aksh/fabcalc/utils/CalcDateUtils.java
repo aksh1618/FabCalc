@@ -15,9 +15,6 @@
  */
 package com.aksh.fabcalc.utils;
 
-/**
- * Class for handling date conversions that are useful for Sunshine.
- */
 public final class CalcDateUtils {
     public static Long getDate() {
         return 1L;

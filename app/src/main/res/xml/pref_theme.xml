@@ -9,15 +9,10 @@
             android:entryValues="@array/theme_keys"
             android:defaultValue="@string/pref_theme_default_key"/>
 
-        <!--<Preference-->
-            <!--android:title="@string/pref_theme_customize_label"-->
-            <!--android:summary="@string/pref_theme_customize_summary">-->
-            <!--<intent-->
-                <!--android:action="android.intent.action.MAIN"-->
-                <!--android:targetPackage="com.aksh.fabcalc"-->
-                <!--android:targetClass="com.aksh.fabcalc.SettingsActivity"-->
-                <!--android:data="@string/pref_theme_customize_data"/>-->
-        <!--</Preference>-->
+        <Preference
+            android:title="@string/pref_theme_customize_label"
+            android:summary="@string/pref_theme_customize_summary">
+        </Preference>
 
     </PreferenceCategory>
 </PreferenceScreen>

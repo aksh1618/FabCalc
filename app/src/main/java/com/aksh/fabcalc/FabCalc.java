@@ -15,6 +15,5 @@ public class FabCalc extends Application {
         super.onCreate();
         ColorUtils.update(getApplicationContext(),
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
-//        Colorful.init(this);
     }
 }

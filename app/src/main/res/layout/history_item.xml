@@ -26,7 +26,6 @@
             app:cardBackgroundColor="@{cardColor}"
             app:cardElevation="2dp"
             app:cardPreventCornerOverlap="false">
-            <!--app:cardUseCompatPadding="true">-->
 
             <LinearLayout
                 android:orientation="vertical"

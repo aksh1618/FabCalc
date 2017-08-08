@@ -77,14 +77,10 @@
     <string name="pref_theme_flat_label">Flat</string>
     <string name="pref_theme_image_label">Image</string>
     <string name="pref_theme_default_label">Default</string>
-    <!--<string name="pref_theme_customize_label">Customize</string>-->
-    <!--<string name="pref_theme_customize_summary">Click to customize selected theme</string>-->
-    <!--<string name="pref_theme_customize_data">theme_data</string>-->
+    <string name="pref_theme_customize_label">Customize</string>
+    <string name="pref_theme_customize_summary">Click to customize selected theme</string>
 
     <!--Color Settings-->
-    <!--<string name="pref_color_label">Colors</string>-->
-    <!--<string name="pref_color_summary">Click to change colors</string>-->
-    <!--<string name="pref_color_data">color_data</string>-->
     <string name="pref_color_primary_key" translatable="false">primary_color</string>
     <string name="pref_color_secondary_key" translatable="false">secondary_color</string>
     <string name="pref_color_text_key" translatable="false">text_color</string>

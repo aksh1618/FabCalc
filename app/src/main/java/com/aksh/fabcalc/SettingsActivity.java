@@ -50,25 +50,6 @@ public class SettingsActivity extends AppCompatActivity implements
                     }
                 }
         );
-
-//        String data = getIntent().getDataString();
-//        if (data == null) {
-//            currentSetting = Setting.GENERAL;
-//        } else {
-//            switch (data) {
-//                case "theme": switchToSetting(Setting.THEME); break;
-//                case "color": switchToSetting(Setting.COLOR); break;
-//            }
-//        }
-//        if (data == null) {
-//            calcSettings.generalSettingsFrameLayout.setVisibility(View.VISIBLE);
-//        } else {
-//            if (data.equals(getString(R.string.pref_theme_customize_data))) {
-//                calcSettings.themeSettingsFrameLayout.setVisibility(View.VISIBLE);
-//            } else if (data.equals(getString(R.string.pref_color_data))) {
-//                calcSettings.colorSettingsFrameLayout.setVisibility(View.VISIBLE);
-//            }
-//        }
     }
 
     @Override
@@ -143,11 +124,11 @@ public class SettingsActivity extends AppCompatActivity implements
             switchToSetting(Setting.GENERAL);
         }
     }
-}
 
-enum Setting {
-    GENERAL,
-    THEME,
-    COLOR
+    enum Setting {
+        GENERAL,
+        THEME,
+        COLOR
+    }
 }
 // TODO: 15-07-2017 Implement Degrees/Radians using https://github.com/fasseg/exp4j/issues/72

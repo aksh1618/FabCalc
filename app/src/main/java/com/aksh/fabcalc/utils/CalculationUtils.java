@@ -3,7 +3,6 @@ package com.aksh.fabcalc.utils;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.text.Editable;
-import android.util.Log;
 
 import com.aksh.fabcalc.R;
 
@@ -23,7 +22,7 @@ import java.util.regex.Pattern;
 
 public class CalculationUtils {
 
-    private static String TAG = CalculationUtils.class.getSimpleName();
+//    private static String TAG = CalculationUtils.class.getSimpleName();
 
     private static final int DECIMAL_PRECISION = 15;
     private static final double SCALE = 1e15;
@@ -77,8 +76,7 @@ public class CalculationUtils {
             @Override
             public double apply(double... args) {
                 double arg = args[0];
-                double result = arg/100;
-                return result;
+                return arg/100;
             }
         };
 
@@ -95,14 +93,12 @@ public class CalculationUtils {
                 },
                 new Function("tan"){
                     public double apply(double... args){
-                        // TODO: 03-08-2017 Apply fix for all odd pi/2 (maybe use toDegrees?)
-//                        if (args[0] == Math.PI / 2) {
+                        // TODO: 03-08-2017 Use Cleaner Method?
                         double result = getTrigonometricResult("tan", args[0]);
-                        Log.d(TAG, "apply: " + result);
+//                        Log.d(TAG, "apply: " + result);
                         if (result == 9223.372036854777) {
                             throw new IllegalArgumentException("Infinity!!");
                         }
-//                        return getTrigonometricResult("tan", args[0]);
                         return result;
                     }
                 },
@@ -126,16 +122,8 @@ public class CalculationUtils {
 
     private static double getTrigonometricResult(String function, double angle) {
         if (angleUnit.equals("degrees")) {
-            // TODO: 04-08-2017 Try better?
-//            if (function.equals("tan") && angle == 90) {
-//                throw new IllegalArgumentException("Infinity!!");
-//            }
             angle = Math.toRadians(angle);
         }
-        MathContext mc = new MathContext(DECIMAL_PRECISION, RoundingMode.FLOOR);
-        BigDecimal myBigDecimal = new BigDecimal(angle, mc);
-        BigDecimal halfPiBigDecimal = new BigDecimal(Math.PI / 2, mc);
-        Log.d(TAG, "getTrigonometricResult: " + myBigDecimal.divide(halfPiBigDecimal, BigDecimal.ROUND_FLOOR));
         double result = 0;
         switch (function) {
             case "sin": result = Math.sin(angle); break;

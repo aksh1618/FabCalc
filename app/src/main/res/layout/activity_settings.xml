@@ -35,7 +35,7 @@
                 android:visibility="visible">
 
                 <fragment android:id="@+id/general_settings_fragment"
-                    android:name="com.aksh.fabcalc.GeneralSettingsFragment"
+                    android:name="com.aksh.fabcalc.settings.GeneralSettingsFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -48,7 +48,7 @@
 
                 <fragment
                     android:id="@+id/theme_settings_fragment"
-                    android:name="com.aksh.fabcalc.ThemeSettingsFragment"
+                    android:name="com.aksh.fabcalc.settings.ThemeSettingsFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -61,7 +61,7 @@
 
                 <fragment
                     android:id="@+id/color_settings_fragment"
-                    android:name="com.aksh.fabcalc.ColorSettingsFragment"
+                    android:name="com.aksh.fabcalc.settings.ColorSettingsFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

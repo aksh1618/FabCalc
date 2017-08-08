@@ -26,7 +26,7 @@ public class LabelsUtils {
         basicLabels = Arrays.asList(context.getResources().getStringArray(R.array.basic_labels));
         advancedLabels = Arrays.asList(context.getResources().getStringArray(R.array.advanced_labels));
         parenFunctions = Arrays.asList(context.getResources().getStringArray(R.array.paren_functions));
-        trigonometricFunctions = Arrays.asList(context.getResources().getStringArray(R.array.trigonometric_functions));
+//        trigonometricFunctions = Arrays.asList(context.getResources().getStringArray(R.array.trigonometric_functions));
     }
 
     public static void applyLabels(ViewGroup viewGroup, State state) {

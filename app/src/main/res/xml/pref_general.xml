@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:colorpicker="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="General">
         <CheckBoxPreference
@@ -49,44 +48,6 @@
             android:summary="Tap to clear all calculation history">
         </Preference>
 
-        <!--<ListPreference-->
-        <!--android:key="number_of_entries"-->
-        <!--android:entries=""-->
-        <!--android:entryValues=""-->
-        <!--android:defaultValue="2"/>-->
-
     </PreferenceCategory>
 
-
-
-        <!--<Preference-->
-            <!--android:title="@string/pref_color_label"-->
-            <!--android:summary="@string/pref_color_summary">-->
-            <!--<intent-->
-                <!--android:action="android.intent.action.MAIN"-->
-                <!--android:targetPackage="com.aksh.fabcalc"-->
-                <!--android:targetClass="com.aksh.fabcalc.SettingsActivity"-->
-                <!--android:data="@string/pref_color_data"/>-->
-        <!--</Preference>-->
-
-        <!--<PreferenceScreen android:title="@string/pref_theme_customize_label">-->
-            <!--<CheckBoxPreference-->
-                <!--android:title="YO"-->
-                <!--android:key="test"-->
-                <!--android:defaultValue="false"-->
-                <!--android:summaryOn="Yo"-->
-                <!--android:summaryOff="No"/>-->
-        <!--</PreferenceScreen>-->
-
-        <!--<org.polaric.colorful.ColorPickerPreference-->
-            <!--android:title="Primary Color"-->
-            <!--android:summary="Color to be used as key background"-->
-            <!--colorpicker:primary_color="true" />-->
-
-        <!--<org.polaric.colorful.ColorPickerPreference-->
-            <!--android:title="Accent Color"-->
-            <!--android:summary="Color to be used as other background"-->
-            <!--colorpicker:accent_color="true" />-->
-
-    <!--</PreferenceCategory>-->
 </PreferenceScreen>

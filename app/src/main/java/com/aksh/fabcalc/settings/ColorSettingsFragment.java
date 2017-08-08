@@ -1,4 +1,4 @@
-package com.aksh.fabcalc;
+package com.aksh.fabcalc.settings;
 
 import static com.aksh.fabcalc.utils.ColorUtils.PRIMARY_COLOR_DIALOG_ID;
 import static com.aksh.fabcalc.utils.ColorUtils.SECONDARY_COLOR_DIALOG_ID;
@@ -13,6 +13,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.widget.ImageView;
 
+import com.aksh.fabcalc.R;
 import com.aksh.fabcalc.utils.MyColorPreference;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 
@@ -22,7 +23,6 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 
 public class ColorSettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener {
-//        Preference.OnPreferenceChangeListener{
 
     String TAG = "ColorSettingFragment";
 
@@ -92,7 +92,6 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Preference preference = findPreference(key);
-//        Log.d("YO", "onSharedPreferenceChanged: " + key);
         if (preference instanceof MyColorPreference) {
             ImageView colorIndicator = ((MyColorPreference)preference).colorIndicator;
             int color = sharedPreferences.getInt(key,

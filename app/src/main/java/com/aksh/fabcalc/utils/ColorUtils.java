@@ -19,7 +19,6 @@ public class ColorUtils {
 
     private int primaryColorDark;
     private ColorStateList primaryColorListDark;
-    private int keyColor;
     private ColorStateList keyColorList;
 
     public static ColorUtils currentColors;
@@ -57,7 +56,6 @@ public class ColorUtils {
                         tintColor
                 }
         );
-//        keyColor = Color.WHITE;
         keyColorList = ColorStateList.valueOf(Color.WHITE);
     }
 
@@ -79,10 +77,6 @@ public class ColorUtils {
 
     public ColorStateList getPrimaryColorListDark() {
         return primaryColorListDark;
-    }
-
-    public int getKeyColor() {
-        return keyColor;
     }
 
     public ColorStateList getKeyColorList() {
@@ -109,10 +103,6 @@ public class ColorUtils {
         this.primaryColorListDark = primaryColorListDark;
     }
 
-    public void setKeyColor(int keyColor) {
-        this.keyColor = keyColor;
-    }
-
     public void setKeyColorList(ColorStateList keyColorList) {
         this.keyColorList = keyColorList;
     }
@@ -128,7 +118,6 @@ public class ColorUtils {
         );
         if (preferences.getBoolean(context.getString(R.string.pref_color_keys_key),
                 context.getResources().getBoolean(R.bool.pref_color_keys_default))) {
-//            newColors.setKeyColor(newColors.getSecondaryColor());
             newColors.setKeyColorList(ColorStateList.valueOf(newColors.getSecondaryColor()));
         }
         currentColors = newColors;
