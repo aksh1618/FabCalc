@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <variable
+            name="textColor"
+            type="int"/>
+    </data>
+
     <LinearLayout
         android:id="@+id/calc_display_linear_layout"
         android:orientation="vertical"
@@ -15,9 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="6"
-            android:background="@color/colorAccent"
-            android:textColor="@color/colorPrimary"
-            android:textColorHint="@color/colorPrimary"
+            android:textColor="@{textColor}"
+            android:textColorHint="@{textColor}"
             android:textAlignment="viewEnd"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -26,16 +31,16 @@
             android:gravity="end|bottom"
             android:textSize="70sp"
             android:maxLines="4"
+            android:cursorVisible="false"
             android:hint="@string/key_num_zero" />
 
         <TextView
             android:id="@+id/result_text_view"
-            android:background="@color/colorAccent"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@{textColor}"
             android:textAlignment="viewEnd"
             android:gravity="end|center"
             android:textSize="20sp"

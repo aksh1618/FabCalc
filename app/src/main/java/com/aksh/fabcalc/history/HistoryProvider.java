@@ -20,7 +20,7 @@ public final class HistoryProvider {
         @ContentUri(
                 path = "history",
                 type = "vnd.android.cursor.dir/history",
-                defaultSort = HistoryContract.COLUMN_ID + " ASC")
+                defaultSort = HistoryContract.COLUMN_ID + " DESC")
         public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/history");
     }
 }

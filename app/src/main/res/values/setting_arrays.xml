@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Theme type selector keys-->
+    <array name="theme_keys">
+        <item>@string/pref_theme_black_and_white_key</item>
+        <item>@string/pref_theme_flat_key</item>
+        <item>@string/pref_theme_image_key</item>
+        <item>@string/pref_theme_default_key</item>
+    </array>
+
+    <!--Theme type selector labels-->
+    <array name="theme_labels">
+        <item>@string/pref_theme_black_and_white_label</item>
+        <item>@string/pref_theme_flat_label</item>
+        <item>@string/pref_theme_image_label</item>
+        <item>@string/pref_theme_default_label</item>
+    </array>
+
+</resources>

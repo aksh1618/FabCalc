@@ -1,34 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:design="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+    <data>
+        <variable
+            name="tintColorList"
+            type="android.content.res.ColorStateList"/>
+        <variable
+            name="menuRes"
+            type="int"/>
+    </data>
 
-        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/status_text_view"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="ADVANCED"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="32sp"
-            android:onClick="onOptionPressed" />
-
-        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/settings_text_view"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="SETTINGS"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="32sp"
-            android:onClick="onOptionPressed" />
-
-    </LinearLayout>
+    <android.support.design.widget.BottomNavigationView android:id="@+id/bottombar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        design:menu="@{menuRes}"
+        design:itemIconTintList="@{tintColorList}"
+        design:itemTextColor="@{tintColorList}"/>
 </layout>

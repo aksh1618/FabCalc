@@ -1,6 +1,7 @@
 package com.aksh.fabcalc.utils;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.util.Log;
 
@@ -25,12 +26,15 @@ public class CalculationUtils {
     private static String TAG = CalculationUtils.class.getSimpleName();
 
     private static final int DECIMAL_PRECISION = 15;
+    private static final double SCALE = 1e15;
 
     private static Function logb;
     private static Operator factorial;
     private static Operator percent;
+    private static Function[] trigonometricFunctions;
+    private static String angleUnit;
 
-    // TODO: 26-06-2017 Add factorial, logb, inverse (instead of cube?), percent (replace by '/100')
+    // TODO: 26-06-2017 Add inverse (instead of cube?)
     static String evaluate(String stringToEvaluate) throws IllegalArgumentException{
         addOperations();
         stringToEvaluate = handlePercent(stringToEvaluate);
@@ -38,6 +42,7 @@ public class CalculationUtils {
                 .operator(factorial)
                 .operator(percent)
                 .function(logb)
+                .functions(trigonometricFunctions)
                 .build().evaluate();
         return roundString(result);
     }
@@ -76,6 +81,93 @@ public class CalculationUtils {
                 return result;
             }
         };
+
+        trigonometricFunctions = new Function[]{
+                new Function("sin"){
+                    public double apply(double... args){
+                        return getTrigonometricResult("sin", args[0]);
+                    }
+                },
+                new Function("cos"){
+                    public double apply(double... args){
+                        return getTrigonometricResult("cos", args[0]);
+                    }
+                },
+                new Function("tan"){
+                    public double apply(double... args){
+                        // TODO: 03-08-2017 Apply fix for all odd pi/2 (maybe use toDegrees?)
+//                        if (args[0] == Math.PI / 2) {
+                        double result = getTrigonometricResult("tan", args[0]);
+                        Log.d(TAG, "apply: " + result);
+                        if (result == 9223.372036854777) {
+                            throw new IllegalArgumentException("Infinity!!");
+                        }
+//                        return getTrigonometricResult("tan", args[0]);
+                        return result;
+                    }
+                },
+                new Function("asin"){
+                    public double apply(double... args){
+                        return getInverseTrigonometricResult("asin", args[0]);
+                    }
+                },
+                new Function("acos"){
+                    public double apply(double... args){
+                        return getInverseTrigonometricResult("acos", args[0]);
+                    }
+                },
+                new Function("atan"){
+                    public double apply(double... args){
+                        return getInverseTrigonometricResult("atan", args[0]);
+                    }
+                }
+        };
+    }
+
+    private static double getTrigonometricResult(String function, double angle) {
+        if (angleUnit.equals("degrees")) {
+            // TODO: 04-08-2017 Try better?
+//            if (function.equals("tan") && angle == 90) {
+//                throw new IllegalArgumentException("Infinity!!");
+//            }
+            angle = Math.toRadians(angle);
+        }
+        MathContext mc = new MathContext(DECIMAL_PRECISION, RoundingMode.FLOOR);
+        BigDecimal myBigDecimal = new BigDecimal(angle, mc);
+        BigDecimal halfPiBigDecimal = new BigDecimal(Math.PI / 2, mc);
+        Log.d(TAG, "getTrigonometricResult: " + myBigDecimal.divide(halfPiBigDecimal, BigDecimal.ROUND_FLOOR));
+        double result = 0;
+        switch (function) {
+            case "sin": result = Math.sin(angle); break;
+            case "cos": result = Math.cos(angle); break;
+            case "tan": result = Math.tan(angle); break;
+        }
+        return Math.round(result * SCALE) / SCALE;
+    }
+
+    private static double getInverseTrigonometricResult(String function, double param) {
+        double angle = 0;
+        switch (function) {
+            case "asin": angle = Math.asin(param); break;
+            case "acos": angle = Math.acos(param); break;
+            case "atan": angle = Math.atan(param); break;
+        }
+        if (angleUnit.equals("degrees")) {
+            angle = Math.toDegrees(angle);
+        }
+        return angle;
+    }
+
+    public static void setAngleUnit(Context context) {
+        boolean useDegrees = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                context.getString(R.string.pref_degrees_key),
+                context.getResources().getBoolean(R.bool.pref_degrees_default)
+        );
+        if (useDegrees) {
+            angleUnit = "degrees";
+        } else {
+            angleUnit = "radians";
+        }
     }
 
     private static String roundString(double value) {
@@ -98,7 +190,6 @@ public class CalculationUtils {
                 .replace(context.getString(R.string.key_log_natural), "log")
                 .replace(context.getString(R.string.key_log_base_10), "log10")
                 .replace("log10b", "logb")
-//                .replace(context.getString(R.string.key_percentage), "@")
         );
     }
 
@@ -117,21 +208,15 @@ public class CalculationUtils {
 
     private static String handlePercent(String input) {
         String substituteString = input;
-//        if (input.matches("(.)*[+-]([\\d.])+%"))
         Pattern pattern = Pattern.compile("(.*)[+-][\\d.]*%");
         Matcher matcher = pattern.matcher(input);
         if (matcher.find()) {
             substituteString = matcher.group(1);
-            Log.d(TAG, "handlePercent: regex match = " + substituteString);
-//            Log.d(TAG, "handlePercent: checking match.end -> " + input.charAt(matcher.end() - 1));
             substituteString = evaluate(substituteString);
-            Log.d(TAG, "handlePercent: multiplicand = " + substituteString);
-//            substituteString = input.substring(0, matcher.end()) + "*" + substituteString;
             substituteString = substituteString
                     + input.substring(matcher.group(1).length(), matcher.end())
                     + "*" + substituteString
             ;
-            Log.d(TAG, "handlePercent: intermediate expression = " + substituteString);
             if (input.length() > matcher.end() + 1) {
                 substituteString += input.substring(matcher.end() + 1);
             }
@@ -139,14 +224,3 @@ public class CalculationUtils {
         return substituteString;
     }
 }
-
-//    static String getTextWithFunctionParens(String text) {
-//        // FIXME: 27-06-2017 Make this reliant on resource?
-//        if (Function.isValidFunctionName(text)) {
-//            text += "(";
-//            if (text.equals("logb(")) {
-//                text = "logb( , )";
-//            }
-//        }
-//        return text;
-//    }

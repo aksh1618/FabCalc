@@ -2,4 +2,5 @@
 <resources>
     <bool name="pref_degrees_default">false</bool>
     <bool name="pref_history_default">true</bool>
+    <bool name="pref_color_keys_default">false</bool>
 </resources>

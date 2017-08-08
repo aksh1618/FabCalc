@@ -47,10 +47,19 @@
         <item>@string/key_asin</item>
         <item>@string/key_acos</item>
         <item>@string/key_atan</item>
-        <item>@string/key_sqrt</item>
         <item>@string/key_log_natural</item>
         <item>@string/key_log_base_10</item>
         <item>@string/key_log_base_b</item>
+    </string-array>
+
+    <!--6 trigonometric functions for angle unit setting-->
+    <string-array name="trigonometric_functions">
+        <item>@string/key_sin</item>
+        <item>@string/key_cos</item>
+        <item>@string/key_tan</item>
+        <item>@string/key_asin</item>
+        <item>@string/key_acos</item>
+        <item>@string/key_atan</item>
     </string-array>
 
     <!--20 basic keys-->

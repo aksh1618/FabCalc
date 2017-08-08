@@ -1,19 +1,29 @@
 package com.aksh.fabcalc;
 
-import static com.aksh.fabcalc.utils.Animations.animateActivityIn;
-import static com.aksh.fabcalc.utils.Animations.animateButtonsIn;
-import static com.aksh.fabcalc.utils.Animations.animateButtonsOut;
-import static com.aksh.fabcalc.utils.Animations.animateKeysToState;
-import static com.aksh.fabcalc.utils.Animations.revealFromCenter;
+import static com.aksh.fabcalc.utils.AnimationUtils.animateActivityIn;
+import static com.aksh.fabcalc.utils.AnimationUtils.animateButtonsIn;
+import static com.aksh.fabcalc.utils.AnimationUtils.animateButtonsOut;
+import static com.aksh.fabcalc.utils.AnimationUtils.animateKeysToState;
+import static com.aksh.fabcalc.utils.AnimationUtils.revealFromCenter;
+import static com.aksh.fabcalc.utils.AnimationUtils.revealFromXY;
 import static com.aksh.fabcalc.utils.ClickListeners.onKeyClicked;
-import static com.aksh.fabcalc.utils.LabelsLists.applyLabels;
-import static com.aksh.fabcalc.utils.LabelsLists.initArrays;
+import static com.aksh.fabcalc.utils.LabelsUtils.applyLabels;
+import static com.aksh.fabcalc.utils.LabelsUtils.initArrays;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -22,16 +32,26 @@ import android.widget.FrameLayout;
 import com.aksh.fabcalc.databinding.ActivityMainBinding;
 import com.aksh.fabcalc.databinding.BasicCalcKeysBinding;
 import com.aksh.fabcalc.databinding.CalcDisplayBinding;
+import com.aksh.fabcalc.databinding.CalcOptionsBinding;
+import com.aksh.fabcalc.history.HistoryItem;
+import com.aksh.fabcalc.utils.CalculationUtils;
+import com.aksh.fabcalc.utils.ColorUtils;
+import com.aksh.fabcalc.utils.DisplayUtils;
 import com.aksh.fabcalc.utils.OnSwipeTouchListener;
-import com.aksh.fabcalc.utils.States;
+import com.aksh.fabcalc.utils.State;
+import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding calc;
     BasicCalcKeysBinding keys;
     CalcDisplayBinding display;
+    CalcOptionsBinding options;
     ViewGroup mainLayout;
-    States calcState;
+    State calcState;
+    FastItemAdapter<HistoryItem> mFastItemAdapter;
+
+//    private static String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +59,14 @@ public class MainActivity extends AppCompatActivity {
         calc = DataBindingUtil.setContentView(this,R.layout.activity_main);
         keys = calc.keys;
         display = calc.display;
+        options = calc.options;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             mainLayout = calc.mainLinearLayout;
         } else {
             mainLayout = calc.mainConstraintLayout;
         }
-        calcState = States.BASIC;
-
+        calcState = State.BASIC;
         initArrays(this);
-        applyLabels(keys.basicGridLayout, calcState);
 
         // Animate app (fade in)
         animateActivityIn(mainLayout);
@@ -55,16 +74,34 @@ public class MainActivity extends AppCompatActivity {
         // TODO: 17-06-2017 Check if this works on SDK 15
         disableKeyboard();
         setListeners();
-    }
+        CalculationUtils.setAngleUnit(this);
 
+        calc.historyRecyclerView.setLayoutManager(
+                new LinearLayoutManager(
+                        MainActivity.this,
+                        LinearLayoutManager.VERTICAL,
+                        false));
+        mFastItemAdapter = new FastItemAdapter<>();
+        calc.historyRecyclerView.setAdapter(mFastItemAdapter);
+    }
 
     private void disableKeyboard() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
     }
 
+    Rect outRect = new Rect();
+    int[] location = new int[2];
+
+    private boolean isViewInBounds(View view, int x, int y){
+        view.getDrawingRect(outRect);
+        view.getLocationOnScreen(location);
+        outRect.offset(location[0], location[1]);
+        return outRect.contains(x, y);
+    }
+
     private void setListeners() {
-        keys.basicGridLayout.setOnTouchListener(new OnSwipeTouchListener(this){
+        calc.keysOverlayCardView.setOnTouchListener(new OnSwipeTouchListener(this){
             @Override
             public boolean onSwipe() {
                 toggleState();
@@ -72,34 +109,145 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        int childCount = keys.basicGridLayout.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View child = keys.basicGridLayout.getChildAt(i);
+            child.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {}
+            });
+            child.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (isViewInBounds(view, (int) motionEvent.getRawX(),
+                            (int) motionEvent.getRawY())) {
+                        if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                            onKeyClicked(MainActivity.this, view, calc);
+                        }
+                    } else {
+                        // FIXME: 18-07-2017 This gives NPE until first swipe not starting from fab
+                        calc.keysOverlayCardView.dispatchTouchEvent(motionEvent);
+                    }
+                    return false;
+                }
+            });
+        }
+
         keys.myFab4.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                display.inputEditText.setText("");
-                display.resultTextView.setText(getString(R.string.key_num_zero));
-                display.resultTextView.setVisibility(View.GONE);
-                // TODO: 27-06-2017 change origin, color for reveal anim
-                revealFromCenter(calc.calcDisplayCardView);
+                DisplayUtils.resetDisplay(MainActivity.this, calc, view);
                 return true;
             }
         });
+
+        calc.options.bottombar.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_toggle:
+                                toggleState();
+                                break;
+                            case R.id.action_settings:
+                                Intent settingsIntent = new Intent(
+                                        MainActivity.this,
+                                        SettingsActivity.class);
+                                startActivity(settingsIntent);
+                                break;
+                            case R.id.action_history:
+                                mFastItemAdapter.clear();
+                                mFastItemAdapter.add(
+                                        HistoryItem.getHistoryList(MainActivity.this));
+                                calc.historyRecyclerView.setVisibility(View.VISIBLE);
+                                keys.basicGridLayout.setVisibility(View.GONE);
+                                animateButtonsOut(keys.basicGridLayout);
+                                View view = options.bottombar;
+                                int coords[] = new int[]{
+                                        (view.getLeft() + view.getRight())/2,
+                                        (view.getTop() + view.getBottom())/2
+                                };
+                                view.getLocationOnScreen(coords);
+                                revealFromXY(calc.operationsCardView, (view.getLeft() + view.getRight())/2, coords[1]);
+                                MenuItem menuItem = calc.options.bottombar.getMenu().getItem(0);
+                                menuItem.setIcon(R.drawable.ic_fabcalc_concise);
+                                menuItem.setTitle(getString(R.string.action_calc));
+                                calcState = State.OTHER;
+                                break;
+//                            case R.id.action_test:
+//                                getContentResolver().delete(
+//                                        HistoryProvider.History.CONTENT_URI,
+//                                        null,
+//                                        null);
+                        }
+                        return false;
+                    }
+                });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        int childCount = mainLayout.getChildCount();
-        for(int i=0; i<childCount; i++) {
-            FrameLayout frameLayout = ((FrameLayout) mainLayout.getChildAt(i));
-            final View myView = frameLayout.getChildAt(0);
-            myView.post(new Runnable() {
-                @Override
-                public void run() {
-                    revealFromCenter(myView);
-                }
-            });
-        }
+        applyColors();
+        applyLabels(keys.basicGridLayout, calcState);
+//        int childCount = mainLayout.getChildCount();
+//        for(int i=0; i<childCount; i++) {
+//            if (mainLayout.getChildAt(i) instanceof RecyclerView) {
+//                continue;
+//            }
+//            FrameLayout frameLayout = ((FrameLayout) mainLayout.getChildAt(i));
+//            final View myView = frameLayout.getChildAt(0);
+//            myView.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    revealFromCenter(myView);
+//                }
+//            });
+//        }
+        calc.displayCardView.post(new Runnable() {
+            @Override
+            public void run() {
+                revealFromCenter(calc.displayCardView);
+            }
+        });
+        calc.centralFrameLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                revealFromCenter(calc.centralFrameLayout);
+            }
+        });
+        calc.navbarCardView.post(new Runnable() {
+            @Override
+            public void run() {
+                revealFromCenter(calc.navbarCardView);
+            }
+        });
         animateButtonsIn(keys.basicGridLayout);
+    }
+
+    // TODO: 15-07-2017 This should be called only if preference has been changed?
+    private void applyColors() {
+//        int primaryColor = getResources().getColor(Colorful.getThemeDelegate().getPrimaryColor().getColorRes());
+//        int accentColor = getResources().getColor(Colorful.getThemeDelegate().getAccentColor().getColorRes());
+//        int textColor = Colorful.getThemeDelegate().getAccentColor() == Colorful.ThemeColor.WHITE ?
+//                primaryColor : Color.WHITE;
+        calc.setColors(ColorUtils.currentColors);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ColorUtils.currentColors.getPrimaryColorDark());
+            getWindow().setNavigationBarColor(ColorUtils.currentColors.getPrimaryColorDark());
+        }
+//        calc.operationsCardView.setCardBackgroundColor(primaryColor);
+//        calc.displayCardView.setCardBackgroundColor(accentColor);
+//        calc.navbarCardView.setCardBackgroundColor(accentColor);
+//        keys.myFab4.setRippleColor(accentColor);
+//        display.inputEditText.setTextColor(textColor);
+//        display.inputEditText.setHintTextColor(textColor);
+//        display.resultTextView.setTextColor(textColor);
+//        calc.options.bottombar.setItemIconTintList(ColorStateList.valueOf(textColor));
+//        calc.options.bottombar.setItemTextColor(ColorStateList.valueOf(textColor));
+//        calc.historyRecyclerView.setBackgroundColor(accentColor);
+//        calc.options.statusTextView.setTextColor(textColor);
+//        calc.options.settingsTextView.setTextColor(textColor);
     }
 
     @Override
@@ -108,55 +256,74 @@ public class MainActivity extends AppCompatActivity {
         animateButtonsOut(keys.basicGridLayout);
     }
 
-    public void onKeyPressed(View view){
-        onKeyClicked(this, view, calc);
-    }
-
     @Override
     public void onBackPressed() {
-        if (calcState == States.BASIC) {
-            super.onBackPressed();
+        if (calcState != State.BASIC) {
+            toggleState();
         } else {
-            switchToState(States.BASIC);
+            super.onBackPressed();
         }
     }
 
-    public void switchToState(States state) {
+    public void switchToState(State state) {
+        if (calcState == State.OTHER) {
+            calc.historyRecyclerView.setVisibility(View.GONE);
+            keys.basicGridLayout.setVisibility(View.VISIBLE);
+            View view = options.bottombar;
+            int coords[] = new int[]{
+                    (view.getLeft() + view.getRight())/2,
+                    (view.getTop() + view.getBottom())/2
+            };
+            view.getLocationOnScreen(coords);
+            revealFromXY(calc.operationsCardView, (view.getLeft() + view.getRight())/3, coords[1]);
+            animateButtonsIn(keys.basicGridLayout);
+            MenuItem item = calc.options.bottombar.getMenu().getItem(0);
+            item.setIcon(R.drawable.ic_flask_outline);
+            item.setTitle(getString(R.string.action_advanced));
+            calcState = state;
+            return;
+        }
         animateKeysToState(keys.basicGridLayout, state);
         calcState = state;
     }
 
     public void toggleState() {
-        if (calcState == States.BASIC) {
-            switchToState(States.ADVANCED);
-        } else {
-            switchToState(States.BASIC);
+        MenuItem item = calc.options.bottombar.getMenu().getItem(0);
+        switch (calcState) {
+            case BASIC:
+                switchToState(State.ADVANCED);
+                item.setIcon(R.drawable.ic_child_friendly);
+                item.setTitle(getString(R.string.action_basic));
+                break;
+            case ADVANCED:
+                switchToState(State.BASIC);
+                item.setIcon(R.drawable.ic_flask_outline);
+                item.setTitle(getString(R.string.action_advanced));
+                break;
+            default:
+                switchToState(State.BASIC);
         }
     }
 
-    public void onOptionPressed(View view) {
-        if (view.getId() == R.id.status_text_view) {
-            if (calcState == States.BASIC) {
-                switchToState(States.ADVANCED);
-                calc.options.statusTextView.setText("<- BASIC");
-            } else {
-                switchToState(States.BASIC);
-                calc.options.statusTextView.setText("ADVANCED");
-            }
-        } else if (view.getId() == R.id.settings_text_view){
-            Intent settingsIntent = new Intent(this, SettingsActivity.class);
-            startActivity(settingsIntent);
-        }
+    // TODO: 08-08-2017 move this somewhere appropriate?
+    @BindingAdapter("menu")
+    public static void setMenu(BottomNavigationView navigationView, int id) {
+        navigationView.inflateMenu(id);
     }
 }
 
-// TODO: 22-06-2017 Animations Speed is set faster on rn4, so check speeds on some other device.
+// FIXME: 19-07-2017 Multiple decimal points possible in a single number
+// FIXME: 15-07-2017 Pasting into display edit text doesn't update result preview text view, maybe use changeListener
+// FIXME: 15-07-2017 Trigonometric functions at extremes (points with values 0 and INF) -> https://github.com/fasseg/exp4j/issues/76
+// FIXME: 22-06-2017 AnimationUtils Speed is set faster on rn4, so check speeds on some other device.
+// TODO: 15-07-2017 Implement displaying of infinity symbol
+// TODO: 15-07-2017 Check if ripple works on lower sdks
+// TODO: 16-07-2017 Add a quick calc option for >N long click, shows basic calc dialog with
+// result having two options, re and done (sync and tick)
 // TODO: 16-06-2017 BottomBar : Can be hidden from settings, available on swipe up
 // TODO: 16-06-2017 History : Accessible from bottom bar ?
 // TODO: 20-06-2017 Settings :
-// - clear on equate? (pressing equal and then typing something else doesn't do anything)
 // - separation commas?
-// - custom background for operations card view (like a pic or something)
 // - default/launch calc (calc to show on app launch)
 // - default angle unit -> radian/degree/<that third one>/custom (get relation to radian)
 // TODO: 22-06-2017 Themes :

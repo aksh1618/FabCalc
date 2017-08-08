@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Fab Calc</string>
 
-    <!--Keys Begin-->
+    <!--==================================KEYS BEGIN========================================-->
 
-    <!--Number Keys Begin-->
+    <!--Number Keys-->
     <string name="key_num_zero">0</string>
     <string name="key_num_one">1</string>
     <string name="key_num_two">2</string>
@@ -14,9 +14,8 @@
     <string name="key_num_seven">7</string>
     <string name="key_num_eight">8</string>
     <string name="key_num_nine">9</string>
-    <!--Number Keys End-->
 
-    <!--Basic Keys Begin-->
+    <!--Basic Keys-->
     <string name="key_plus">+</string>
     <string name="key_minus">-</string>
     <string name="key_divide">÷</string>
@@ -30,9 +29,8 @@
     <string name="key_point">.</string>
     <string name="key_paren_open">(</string>
     <string name="key_paren_close">)</string>
-    <!--Basic Keys End-->
 
-    <!--Advanced Keys Begin-->
+    <!--Advanced Keys-->
     <string name="key_degree">°</string>
     <string name="key_sin">sin</string>
     <string name="key_cos">cos</string>
@@ -50,11 +48,10 @@
     <string name="key_euler">e</string>
     <string name="key_factorial">!</string>
     <string name="key_pi">π</string>
-    <!--Advanced Keys End-->
 
-    <!--Keys End-->
-    
-    <!--Settings Begin-->
+    <!--=====================================KEYS END========================================-->
+    <!--=====================================================================================-->
+    <!--==================================SETTINGS BEGIN=====================================-->
 
     <!--Degree Setting-->
     <string name="pref_degrees_key" translatable="false">use_degrees</string>
@@ -68,7 +65,56 @@
     <string name="pref_history_true">Enabled</string>
     <string name="pref_history_false">Disabled</string>
 
-    <!--Settings End-->
-    
+    <!--Theme Setting-->
+    <string name="pref_theme_key">theme</string>
+    <string name="pref_theme_black_and_white_key" translatable="false">theme_bnw</string>
+    <string name="pref_theme_flat_key" translatable="false">theme_flat</string>
+    <string name="pref_theme_image_key" translatable="false">theme_image</string>
+    <string name="pref_theme_default_key" translatable="false">theme_default</string>
+    <string name="pref_theme_customize_key" translatable="false">theme_customize</string>
+    <string name="pref_theme_label">Theme</string>
+    <string name="pref_theme_black_and_white_label">Black &amp; White</string>
+    <string name="pref_theme_flat_label">Flat</string>
+    <string name="pref_theme_image_label">Image</string>
+    <string name="pref_theme_default_label">Default</string>
+    <!--<string name="pref_theme_customize_label">Customize</string>-->
+    <!--<string name="pref_theme_customize_summary">Click to customize selected theme</string>-->
+    <!--<string name="pref_theme_customize_data">theme_data</string>-->
+
+    <!--Color Settings-->
+    <!--<string name="pref_color_label">Colors</string>-->
+    <!--<string name="pref_color_summary">Click to change colors</string>-->
+    <!--<string name="pref_color_data">color_data</string>-->
+    <string name="pref_color_primary_key" translatable="false">primary_color</string>
+    <string name="pref_color_secondary_key" translatable="false">secondary_color</string>
+    <string name="pref_color_text_key" translatable="false">text_color</string>
+    <string name="pref_color_keys_key" translatable="false">keys_color</string>
+    <string name="pref_color_primary_label">Primary Color</string>
+    <string name="pref_color_secondary_label">Secondary Color</string>
+    <string name="pref_color_text_label">Text Color</string>
+    <string name="pref_color_keys_label">Color Keys</string>
+    <string name="pref_color_primary_summary">Used for keys background</string>
+    <string name="pref_color_secondary_summary">Used for other Backgrounds</string>
+    <string name="pref_color_text_summary">Used for text globally</string>
+    <string name="pref_color_keys_true">Keys will be secondary color</string>
+    <string name="pref_color_keys_false">Keys will be white</string>
+
+    <!--====================================SETTINGS END=====================================-->
+    <!--=====================================================================================-->
+    <!--===============================BOTTOM BAR OPTIONS BEGIN==============================-->
+
+    <!--Main Item Labels-->
+    <string name="action_advanced">Advanced</string>
+    <string name="action_basic">Basic</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_history">History</string>
+    <string name="action_calc">Calc</string>
+
+    <!--Settings Item Labels-->
+    <string name="action_general">General</string>
+    <string name="action_theme">Theme</string>
+    <string name="action_colors">Colors</string>
+
+    <!--================================BOTTOM BAR OPTIONS END===============================-->
 
 </resources>

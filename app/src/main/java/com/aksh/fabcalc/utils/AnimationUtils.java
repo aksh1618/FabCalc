@@ -1,13 +1,15 @@
 package com.aksh.fabcalc.utils;
 
-import static com.aksh.fabcalc.utils.LabelsLists.getLabelsForState;
+import static com.aksh.fabcalc.utils.LabelsUtils.getLabelsForState;
 
 import android.animation.Animator;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.DecelerateInterpolator;
 
 import java.util.List;
 
@@ -17,14 +19,15 @@ import io.codetail.animation.ViewAnimationUtils;
  * Created by Aakarshit on 16-06-2017.
  */
 
-public class Animations {
+public class AnimationUtils {
 
-    private static final int ANIMATION_DURATION = 800;
+    private static final int CIRCULAR_REVEAL_DURATION = 400;
+    private static final int STATE_SWITCH_DURATION = CIRCULAR_REVEAL_DURATION / 3;
 
     public static void animateActivityIn(ViewGroup viewGroup){
         AlphaAnimation animation = new AlphaAnimation(0.0f , 1.0f ) ;
         animation.setFillAfter(true);
-        animation.setDuration(ANIMATION_DURATION / 2);
+        animation.setDuration(CIRCULAR_REVEAL_DURATION / 2);
         viewGroup.startAnimation(animation);
     }
 
@@ -43,7 +46,22 @@ public class Animations {
         Animator animator =
                 ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.setDuration(ANIMATION_DURATION);
+        animator.setDuration(CIRCULAR_REVEAL_DURATION);
+        animator.start();
+    }
+
+    public static void revealFromXY(View myView, int x, int y){
+
+        // get the final radius for the clipping circle
+        int dx = Math.max(x, myView.getWidth() - x);
+        int dy = Math.max(y, myView.getHeight() - y);
+        float finalRadius = (float) Math.hypot(dx, dy);
+
+        // Android native animator
+        Animator animator =
+                ViewAnimationUtils.createCircularReveal(myView, x, y, 0, finalRadius);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.setDuration(CIRCULAR_REVEAL_DURATION);
         animator.start();
     }
 
@@ -52,7 +70,8 @@ public class Animations {
         for (int i = 0; i < childCount; i++) {
             View child = viewGroup.getChildAt(i);
             child.animate()
-                    .setStartDelay(ANIMATION_DURATION + i * 2 *ANIMATION_DURATION / (3 * childCount))
+                    .setStartDelay(
+                            CIRCULAR_REVEAL_DURATION + i * 2 * CIRCULAR_REVEAL_DURATION / (3 * childCount))
                     .setInterpolator(new AccelerateDecelerateInterpolator())
                     .alpha(1)
                     .scaleX(1)
@@ -73,31 +92,47 @@ public class Animations {
         }
     }
 
-    public static void animateKeysToState(ViewGroup viewGroup, States state) {
+    public static void animateKeysToState(ViewGroup viewGroup, State state) {
         final int childCount = viewGroup.getChildCount();
         List<String> labels = getLabelsForState(state);
         for (int i = 0; i < childCount; i++) {
             final View child = viewGroup.getChildAt(i);
             final String label = labels.get(i);
+            // TODO: 16-07-2017 Find a better alternative?
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 child.animate()
                         .setStartDelay(i)
-                        .setInterpolator(new AccelerateDecelerateInterpolator())
+                        .setDuration(STATE_SWITCH_DURATION)
+                        .setInterpolator(new AccelerateInterpolator())
                         .alpha(0)
                         .scaleX(0f)
                         .withEndAction(new Runnable() {
                             @Override
                             public void run() {
-                                ((MyFab)child).setDrawableText(label);
+                                ((MyFab) child).setDrawableText(label);
                                 child.animate()
-                                        .setInterpolator(new AccelerateDecelerateInterpolator())
+                                        .setDuration(STATE_SWITCH_DURATION)
+                                        .setInterpolator(new DecelerateInterpolator())
                                         .alpha(1)
                                         .scaleX(1)
                                         .scaleY(1);
                             }
                         });
+            } else {
+                ((MyFab) child).setDrawableText(label);
             }
         }
+    }
 
+    static void animatePreviewToResult(View preview, View result) {
+        result.animate()
+                .setDuration(STATE_SWITCH_DURATION)
+                .translationY(1f)
+        ;
+        preview.animate()
+                .translationY(1f)
+                .scaleX(2)
+                .scaleY(2)
+        ;
     }
 }

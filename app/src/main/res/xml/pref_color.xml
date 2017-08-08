@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference android:title="Show preview here"/>
+
+    <com.aksh.fabcalc.utils.MyColorPreference android:key="@string/pref_color_primary_key"
+        android:title="@string/pref_color_primary_label"
+        android:layout="@layout/pref_color_layout"
+        android:summary="@string/pref_color_primary_summary"/>
+
+    <com.aksh.fabcalc.utils.MyColorPreference android:key="@string/pref_color_secondary_key"
+        android:title="@string/pref_color_secondary_label"
+        android:layout="@layout/pref_color_layout"
+        android:summary="@string/pref_color_secondary_summary"/>
+
+    <com.aksh.fabcalc.utils.MyColorPreference android:key="@string/pref_color_text_key"
+        android:title="@string/pref_color_text_label"
+        android:layout="@layout/pref_color_layout"
+        android:summary="@string/pref_color_text_summary"/>
+
+    <CheckBoxPreference android:key="@string/pref_color_keys_key"
+        android:title="@string/pref_color_keys_label"
+        android:defaultValue="@bool/pref_color_keys_default"
+        android:summaryOn="@string/pref_color_keys_true"
+        android:summaryOff="@string/pref_color_keys_false"
+        android:buttonTint="@color/colorWhite"/>
+</PreferenceScreen>

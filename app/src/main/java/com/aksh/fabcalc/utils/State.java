@@ -1,6 +1,7 @@
 package com.aksh.fabcalc.utils;
 
-public enum States {
+public enum State {
     BASIC,
-    ADVANCED
+    ADVANCED,
+    OTHER
 }

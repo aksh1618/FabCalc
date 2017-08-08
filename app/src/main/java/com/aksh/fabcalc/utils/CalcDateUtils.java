@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.aksh.fabcalc.history;
+package com.aksh.fabcalc.utils;
 
 /**
  * Class for handling date conversions that are useful for Sunshine.
  */
 public final class CalcDateUtils {
-    String getDate() {
-        return "date";
+    public static Long getDate() {
+        return 1L;
     }
 }

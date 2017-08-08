@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="item"
+            type="com.aksh.fabcalc.history.HistoryItem"/>
+        <variable
+            name="cardColor"
+            type="int"/>
+        <variable
+            name="textColor"
+            type="int"/>
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/history_item_relative_layout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:paddingBottom="4dp">
+
+        <android.support.v7.widget.CardView
+            style="@style/CardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@{cardColor}"
+            app:cardElevation="2dp"
+            app:cardPreventCornerOverlap="false">
+            <!--app:cardUseCompatPadding="true">-->
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00000000">
+
+                <!--TODO: Check if expression fits in this-->
+                <TextView
+                    android:id="@+id/history_item_expression_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.expression}"
+                    android:textSize="20sp"
+                    android:textColor="@{textColor}" />
+
+                <TextView
+                    android:id="@+id/history_item_result_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.result}"
+                    android:textAlignment="viewEnd"
+                    android:gravity="end|center"
+                    android:textSize="20sp"
+                    android:textColor="@{textColor}" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</layout>

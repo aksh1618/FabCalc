@@ -3,11 +3,12 @@ package com.aksh.fabcalc.utils;
 import static com.aksh.fabcalc.utils.CalculationUtils.evaluate;
 import static com.aksh.fabcalc.utils.CalculationUtils.getEvaluableString;
 import static com.aksh.fabcalc.utils.DisplayUtils.backspace;
+import static com.aksh.fabcalc.utils.DisplayUtils.resetDisplay;
 import static com.aksh.fabcalc.utils.DisplayUtils.insert;
 import static com.aksh.fabcalc.utils.DisplayUtils.updatePreview;
-import static com.aksh.fabcalc.utils.LabelsLists.inputLabels;
-import static com.aksh.fabcalc.utils.LabelsLists.parenFunctions;
+import static com.aksh.fabcalc.utils.LabelsUtils.inputLabels;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 
 import com.aksh.fabcalc.R;
 import com.aksh.fabcalc.databinding.ActivityMainBinding;
+import com.aksh.fabcalc.history.HistoryContract;
+import com.aksh.fabcalc.history.HistoryProvider;
 import com.autofit.et.lib.AutoFitEditText;
 
 /**
@@ -24,6 +27,8 @@ import com.autofit.et.lib.AutoFitEditText;
 public class ClickListeners {
 
     private static String TAG = ClickListeners.class.getSimpleName();
+    // TODO: 19-07-2017 replace with last key pressed ?
+    private static boolean equalPressed = false;
 
     public static void onKeyClicked(Context context, View view, ActivityMainBinding calc){
         String keyText = ((MyFab)view).getText();
@@ -33,8 +38,12 @@ public class ClickListeners {
         if (inputLabels.contains(keyText)) {
             insert(inputEditText, keyText);
             resultPrev.setVisibility(View.VISIBLE);
+            equalPressed = false;
         } else if (keyText.equals(context.getString(R.string.key_clear))) {
-            if (resultPrev.getVisibility() == View.GONE || inputEditText.getText().length() < 2) {
+            if (equalPressed) {
+                if (inputEditText.getText().length() > 0)
+                    resetDisplay(context, calc, view);
+            } else if (inputEditText.getText().length() < 2) {
                 inputEditText.setText("");
                 resultPrev.setText(context.getString(R.string.key_num_zero));
                 resultPrev.setVisibility(View.GONE);
@@ -42,11 +51,13 @@ public class ClickListeners {
                 backspace(inputEditText);
             }
         } else { // If equal is pressed
-            // TODO: 26-06-2017 Add some animation (like google calc?)
-            if (inputEditText.getText().length() > 0) {
-                String result;
+            equalPressed = true;
+            String finalExpression = inputEditText.getText().toString();
+            String result;
+            if (finalExpression.length() > 0) {
                 try {
                     result = evaluate(getEvaluableString(inputEditText.getText(), context));
+                    // TODO: 24-07-2017 If exception is caught, show error in prev, not input.
                 } catch (IllegalArgumentException iae) { // Invalid Expression
                     result = "Not A Number !!";
                     Log.w(TAG, "onKeyClicked: " + iae.getStackTrace().toString(), iae);
@@ -57,6 +68,9 @@ public class ClickListeners {
                 }
                 inputEditText.setText("");
                 inputEditText.append(result);
+                HistoryContract.insertRecord(finalExpression, result, context);
+                // TODO: 19-07-2017 Do something bout this
+//                AnimationUtils.animatePreviewToResult(resultPrev, inputEditText);
             }
             resultPrev.setVisibility(View.GONE);
         }

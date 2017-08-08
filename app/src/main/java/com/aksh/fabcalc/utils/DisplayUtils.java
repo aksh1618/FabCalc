@@ -1,10 +1,15 @@
 package com.aksh.fabcalc.utils;
 
+import static com.aksh.fabcalc.utils.AnimationUtils.revealFromXY;
 import static com.aksh.fabcalc.utils.CalculationUtils.evaluate;
-import static com.aksh.fabcalc.utils.LabelsLists.parenFunctions;
+import static com.aksh.fabcalc.utils.LabelsUtils.parenFunctions;
 
+import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
 
+import com.aksh.fabcalc.R;
+import com.aksh.fabcalc.databinding.ActivityMainBinding;
 import com.autofit.et.lib.AutoFitEditText;
 
 /**
@@ -16,8 +21,10 @@ public class DisplayUtils {
         String resultText = resultPrev.getText().toString();
         try {
             resultText = evaluate(stringToEvaluate);
-        } catch (Exception iTE) {
-            // Ignore
+        } catch (Exception e) {
+            if (e instanceof IllegalArgumentException) {
+                resultText = "NaN";
+            }
         } finally {
             resultPrev.setText(resultText);
         }
@@ -31,7 +38,6 @@ public class DisplayUtils {
                 textToInsert = "logb(,)";
             }
         }
-//        textToInsert = getTextWithFunctionParens(textToInsert);
         int start = Math.max(myEditText.getSelectionStart(), 0);
         int end = Math.max(myEditText.getSelectionEnd(), 0);
         myEditText.getText().replace(Math.min(start, end), Math.max(start, end),
@@ -45,5 +51,15 @@ public class DisplayUtils {
         if (start < 0) return;
         myEditText.getText().replace(Math.min(start, end), Math.max(start, end),
                 "", 0, 0);
+    }
+
+    public static void resetDisplay(Context context, ActivityMainBinding calc, View view) {
+        calc.display.inputEditText.setText("");
+        calc.display.resultTextView.setText(context.getString(R.string.key_num_zero));
+        calc.display.resultTextView.setVisibility(View.GONE);
+        // TODO: 27-06-2017 change color for reveal anim?
+        int coords[] = new int[2];
+        view.getLocationOnScreen(coords);
+        revealFromXY(calc.displayCardView, coords[0], coords[1]);
     }
 }

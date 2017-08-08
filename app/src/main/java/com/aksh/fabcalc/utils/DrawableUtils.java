@@ -23,7 +23,7 @@ public class DrawableUtils {
         Resources res = mContext.getResources();
         mBuilder = TextDrawable.builder()
                 .beginConfig()
-                .textColor(ResourcesCompat.getColor(res, R.color.colorPrimary, null))
+                .textColor(ColorUtils.currentColors.getTextColor())
                 .fontSize(res.getDimensionPixelSize(R.dimen.short_label_text_size))
                 .useFont(Typeface.SANS_SERIF)
                 .bold()
