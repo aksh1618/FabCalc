@@ -15,19 +15,20 @@ import android.content.res.Configuration;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 import com.aksh.fabcalc.databinding.ActivityMainBinding;
 import com.aksh.fabcalc.databinding.BasicCalcKeysBinding;
@@ -37,11 +38,14 @@ import com.aksh.fabcalc.history.HistoryItem;
 import com.aksh.fabcalc.utils.CalculationUtils;
 import com.aksh.fabcalc.utils.ColorUtils;
 import com.aksh.fabcalc.utils.DisplayUtils;
+import com.aksh.fabcalc.utils.MyFab;
 import com.aksh.fabcalc.utils.OnSwipeTouchListener;
 import com.aksh.fabcalc.utils.State;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 
 public class MainActivity extends AppCompatActivity {
+
+    private String PREVIEW_KEY = "preview";
 
     ActivityMainBinding calc;
     BasicCalcKeysBinding keys;
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     ViewGroup mainLayout;
     State calcState;
     FastItemAdapter<HistoryItem> mFastItemAdapter;
+//    boolean isLandscape;
 
 //    private static String TAG = MainActivity.class.getSimpleName();
 
@@ -60,12 +65,22 @@ public class MainActivity extends AppCompatActivity {
         keys = calc.keys;
         display = calc.display;
         options = calc.options;
+        mainLayout = calc.mainLinearLayout;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            mainLayout = calc.mainLinearLayout;
+//            isLandscape = false;
+            calcState = State.BASIC;
+            // TODO: 12-08-2017 Provide this for landscape mode somehow?
+            calc.historyRecyclerView.setLayoutManager(
+                    new LinearLayoutManager(
+                            MainActivity.this,
+                            LinearLayoutManager.VERTICAL,
+                            false));
+            mFastItemAdapter = new FastItemAdapter<>();
+            calc.historyRecyclerView.setAdapter(mFastItemAdapter);
         } else {
-            mainLayout = calc.mainConstraintLayout;
+//            isLandscape = true;
+            calcState = State.LANDSCAPE;
         }
-        calcState = State.BASIC;
         initArrays(this);
 
         // Animate app (fade in)
@@ -74,15 +89,45 @@ public class MainActivity extends AppCompatActivity {
         // TODO: 17-06-2017 Check if this works on SDK 15
         disableKeyboard();
         setListeners();
+//        setUpKeys();
         CalculationUtils.setAngleUnit(this);
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(PREVIEW_KEY)) {
+                display.resultTextView.setVisibility(View.VISIBLE);
+                display.resultTextView.setText(savedInstanceState.getString(PREVIEW_KEY));
+            }
+        }
+    }
 
-        calc.historyRecyclerView.setLayoutManager(
-                new LinearLayoutManager(
-                        MainActivity.this,
-                        LinearLayoutManager.VERTICAL,
-                        false));
-        mFastItemAdapter = new FastItemAdapter<>();
-        calc.historyRecyclerView.setAdapter(mFastItemAdapter);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        applyColors();
+        setUpKeys();
+        animateComponents();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        animateButtonsOut(keys.basicGridLayout);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (calcState == State.BASIC || calcState == State.LANDSCAPE) {
+            super.onBackPressed();
+        } else {
+            toggleState();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (!display.resultTextView.getText().toString().equals("")) {
+            outState.putString(PREVIEW_KEY, display.resultTextView.getText().toString());
+        }
     }
 
     private void disableKeyboard() {
@@ -90,106 +135,51 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
     }
 
-    Rect outRect = new Rect();
-    int[] location = new int[2];
-
-    private boolean isViewInBounds(View view, int x, int y){
-        view.getDrawingRect(outRect);
-        view.getLocationOnScreen(location);
-        outRect.offset(location[0], location[1]);
-        return outRect.contains(x, y);
-    }
-
     private void setListeners() {
-        calc.keysOverlayCardView.setOnTouchListener(new OnSwipeTouchListener(this){
-            @Override
-            public boolean onSwipe() {
-                toggleState();
-                return true;
-            }
-        });
+        MyFab clearKey;
 
-        int childCount = keys.basicGridLayout.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            final View child = keys.basicGridLayout.getChildAt(i);
-            child.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {}
-            });
-            child.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (isViewInBounds(view, (int) motionEvent.getRawX(),
-                            (int) motionEvent.getRawY())) {
-                        if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                            onKeyClicked(MainActivity.this, view, calc);
-                        }
-                    } else {
-                        // FIXME: 18-07-2017 This gives NPE until first swipe not starting from fab
-                        calc.keysOverlayCardView.dispatchTouchEvent(motionEvent);
-                    }
-                    return false;
-                }
-            });
+        if (calcState == State.LANDSCAPE) {
+            clearKey = keys.myFab10;
+            setSpecialKeysListeners();
+        } else {
+            clearKey = keys.myFab4;
+            setKeySwipeListener();
+            setBottombarListener();
         }
 
-        keys.myFab4.setOnLongClickListener(new View.OnLongClickListener() {
+        clearKey.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                DisplayUtils.resetDisplay(MainActivity.this, calc, view);
+                DisplayUtils.resetDisplay(calc, view);
                 return true;
             }
         });
-
-        calc.options.bottombar.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_toggle:
-                                toggleState();
-                                break;
-                            case R.id.action_settings:
-                                Intent settingsIntent = new Intent(
-                                        MainActivity.this,
-                                        SettingsActivity.class);
-                                startActivity(settingsIntent);
-                                break;
-                            case R.id.action_history:
-                                mFastItemAdapter.clear();
-                                mFastItemAdapter.add(
-                                        HistoryItem.getHistoryList(MainActivity.this));
-                                calc.historyRecyclerView.setVisibility(View.VISIBLE);
-                                keys.basicGridLayout.setVisibility(View.GONE);
-                                animateButtonsOut(keys.basicGridLayout);
-                                View view = options.bottombar;
-                                int coords[] = new int[]{
-                                        (view.getLeft() + view.getRight())/2,
-                                        (view.getTop() + view.getBottom())/2
-                                };
-                                view.getLocationOnScreen(coords);
-                                revealFromXY(calc.operationsCardView, (view.getLeft() + view.getRight())/2, coords[1]);
-                                MenuItem menuItem = calc.options.bottombar.getMenu().getItem(0);
-                                menuItem.setIcon(R.drawable.ic_fabcalc_concise);
-                                menuItem.setTitle(getString(R.string.action_calc));
-                                calcState = State.OTHER;
-                                break;
-//                            case R.id.action_test:
-//                                getContentResolver().delete(
-//                                        HistoryProvider.History.CONTENT_URI,
-//                                        null,
-//                                        null);
-                        }
-                        return false;
-                    }
-                });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        applyColors();
+    // TODO: 15-07-2017 This should be called only if preference has been changed?
+    private void applyColors() {
+        calc.setColors(ColorUtils.currentColors);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ColorUtils.currentColors.getPrimaryColorDark());
+            getWindow().setNavigationBarColor(ColorUtils.currentColors.getPrimaryColorDark());
+        }
+    }
+
+    private void setUpKeys() {
         applyLabels(keys.basicGridLayout, calcState);
+        if (calcState == State.LANDSCAPE) {
+            Drawable settingsIcon = ResourcesCompat.getDrawable(
+                    getResources(),
+                    R.drawable.ic_settings,
+                    null
+            );
+            settingsIcon = DrawableCompat.wrap(settingsIcon);
+            DrawableCompat.setTint(settingsIcon, ColorUtils.currentColors.getTextColor());
+            keys.myFab1.setImageDrawable(settingsIcon);
+        }
+    }
+
+    private void animateComponents() {
         calc.displayCardView.post(new Runnable() {
             @Override
             public void run() {
@@ -202,37 +192,117 @@ public class MainActivity extends AppCompatActivity {
                 revealFromCenter(calc.centralFrameLayout);
             }
         });
-        calc.navbarCardView.post(new Runnable() {
-            @Override
-            public void run() {
-                revealFromCenter(calc.navbarCardView);
-            }
-        });
+        if (calcState != State.LANDSCAPE) {
+            final int x = calc.navbarCardView.getLeft();
+            final int y = (calc.navbarCardView.getBottom() + calc.navbarCardView.getTop()) / 2;
+            calc.navbarCardView.post(new Runnable() {
+                @Override
+                public void run() {revealFromXY(calc.navbarCardView, x, y);
+                }
+            });
+        }
         animateButtonsIn(keys.basicGridLayout);
     }
 
-    // TODO: 15-07-2017 This should be called only if preference has been changed?
-    private void applyColors() {
-        calc.setColors(ColorUtils.currentColors);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(ColorUtils.currentColors.getPrimaryColorDark());
-            getWindow().setNavigationBarColor(ColorUtils.currentColors.getPrimaryColorDark());
+    // Called only for portrait mode
+    protected void setKeySwipeListener() {
+        calc.keysOverlayCardView.setOnTouchListener(new OnSwipeTouchListener(this){
+            @Override
+            public boolean onSwipe() {
+                toggleState();
+                return true;
+            }
+        });
+
+        View.OnTouchListener childListener = new View.OnTouchListener() {
+            private boolean isViewInBounds(View view, int x, int y){
+                Rect outRect = new Rect();
+                int[] location = new int[2];
+                view.getDrawingRect(outRect);
+                view.getLocationOnScreen(location);
+                outRect.offset(location[0], location[1]);
+                return outRect.contains(x, y);
+            }
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (isViewInBounds(view, (int) motionEvent.getRawX(),
+                        (int) motionEvent.getRawY())) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                        fabOnClick(view);
+                    }
+                } else {
+                    // FIXME: 18-07-2017 This gives NPE until first swipe not starting from fab
+                    calc.keysOverlayCardView.dispatchTouchEvent(motionEvent);
+                }
+                return false;
+            }
+        };
+
+        int childCount = keys.basicGridLayout.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View child = keys.basicGridLayout.getChildAt(i);
+            // This has to be used to override default listener, which has to be used for
+            // landscape mode; for portrait, Up Action will take care of clicks.
+            child.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
+            child.setOnTouchListener(childListener);
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        animateButtonsOut(keys.basicGridLayout);
+    // Called only for portrait mode
+    protected void setBottombarListener() {
+        calc.options.bottombar.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_toggle:
+                                toggleState();
+                                break;
+                            case R.id.action_settings:
+                                openSettings();
+                                break;
+                            case R.id.action_history:
+                                mFastItemAdapter.clear();
+                                mFastItemAdapter.add(
+                                        HistoryItem.getHistoryList(MainActivity.this));
+                                calc.historyRecyclerView.setVisibility(View.VISIBLE);
+                                keys.basicGridLayout.setVisibility(View.GONE);
+                                animateButtonsOut(keys.basicGridLayout);
+                                View view = options.bottombar;
+                                int[] coords = new int[2];
+                                view.getLocationOnScreen(coords);
+                                revealFromXY(calc.operationsCardView,
+                                        (view.getLeft() + view.getRight())/2, coords[1]);
+                                MenuItem menuItem = calc.options.bottombar.getMenu().getItem(0);
+                                menuItem.setIcon(R.drawable.ic_fabcalc_concise);
+                                menuItem.setTitle(getString(R.string.action_calc));
+                                calcState = State.OTHER;
+                                break;
+//                                case R.id.action_test:
+//                                    getContentResolver().delete(
+//                                            HistoryProvider.History.CONTENT_URI,
+//                                            null,
+//                                            null);
+                        }
+                        return false;
+                    }
+                });
     }
 
-    @Override
-    public void onBackPressed() {
-        if (calcState != State.BASIC) {
-            toggleState();
-        } else {
-            super.onBackPressed();
-        }
+    // Called only for landscape Mode
+    protected void setSpecialKeysListeners() {
+        // Settings key
+        keys.myFab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSettings();
+            }
+        });
     }
 
     public void switchToState(State state) {
@@ -240,17 +310,21 @@ public class MainActivity extends AppCompatActivity {
             calc.historyRecyclerView.setVisibility(View.GONE);
             keys.basicGridLayout.setVisibility(View.VISIBLE);
             View view = options.bottombar;
-            int coords[] = new int[]{
-                    (view.getLeft() + view.getRight())/2,
-                    (view.getTop() + view.getBottom())/2
-            };
+            int coords[] = new int[2];
             view.getLocationOnScreen(coords);
             revealFromXY(calc.operationsCardView, (view.getLeft() + view.getRight())/3, coords[1]);
             animateButtonsIn(keys.basicGridLayout);
             MenuItem item = calc.options.bottombar.getMenu().getItem(0);
-            item.setIcon(R.drawable.ic_flask_outline);
-            item.setTitle(getString(R.string.action_advanced));
-            calcState = state;
+            if ((getResources().getStringArray(R.array.basic_labels))[2].equals(
+                    keys.myFab3.getDrawableText())) {
+                item.setIcon(R.drawable.ic_flask_outline);
+                item.setTitle(getString(R.string.action_advanced));
+                calcState = State.BASIC;
+            } else {
+                item.setIcon(R.drawable.ic_child_friendly);
+                item.setTitle(getString(R.string.action_basic));
+                calcState = State.ADVANCED;
+            }
             return;
         }
         animateKeysToState(keys.basicGridLayout, state);
@@ -270,9 +344,22 @@ public class MainActivity extends AppCompatActivity {
                 item.setIcon(R.drawable.ic_flask_outline);
                 item.setTitle(getString(R.string.action_advanced));
                 break;
+//            case LANDSCAPE:
+//                // Do nothing.
+//                break;
             default:
                 switchToState(State.BASIC);
         }
+    }
+
+    public void fabOnClick(View view) {
+        onKeyClicked(MainActivity.this, view, calc);
+    }
+
+    protected void openSettings() {
+        Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(settingsIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     // TODO: 08-08-2017 move this somewhere appropriate?

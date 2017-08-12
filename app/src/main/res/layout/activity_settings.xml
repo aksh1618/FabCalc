@@ -14,66 +14,85 @@
     <io.codetail.widget.RevealLinearLayout android:id="@+id/settings_main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#88888888">
 
-        <android.support.v7.widget.CardView android:id="@+id/settings_card_view"
-            style="@style/CardView"
+        <LinearLayout android:id="@+id/settings_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
-            app:cardBackgroundColor="@{colors.primaryColor}"
-            app:cardElevation="2dp"
-            app:cardPreventCornerOverlap="false"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            android:paddingTop="2dp"
-            app:cardUseCompatPadding="true">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <FrameLayout android:id="@+id/general_settings_frame_layout"
+            <View
+                android:id="@+id/filler_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:alpha="0" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/settings_card_view"
+                style="@style/CardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible">
+                app:cardBackgroundColor="@{colors.primaryColor}"
+                app:cardElevation="2dp"
+                app:cardPreventCornerOverlap="false"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp">
 
-                <fragment android:id="@+id/general_settings_fragment"
-                    android:name="com.aksh.fabcalc.settings.GeneralSettingsFragment"
+                <FrameLayout
+                    android:id="@+id/general_settings_frame_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
 
-            </FrameLayout>
+                    <fragment
+                        android:id="@+id/general_settings_fragment"
+                        android:name="com.aksh.fabcalc.settings.GeneralSettingsFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-            <FrameLayout android:id="@+id/theme_settings_frame_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                </FrameLayout>
 
-                <fragment
-                    android:id="@+id/theme_settings_fragment"
-                    android:name="com.aksh.fabcalc.settings.ThemeSettingsFragment"
+                <FrameLayout
+                    android:id="@+id/theme_settings_frame_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
-            </FrameLayout>
+                    <fragment
+                        android:id="@+id/theme_settings_fragment"
+                        android:name="com.aksh.fabcalc.settings.ThemeSettingsFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-            <FrameLayout android:id="@+id/color_settings_frame_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                </FrameLayout>
 
-                <fragment
-                    android:id="@+id/color_settings_fragment"
-                    android:name="com.aksh.fabcalc.settings.ColorSettingsFragment"
+                <FrameLayout
+                    android:id="@+id/color_settings_frame_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
-            </FrameLayout>
+                    <fragment
+                        android:id="@+id/color_settings_fragment"
+                        android:name="com.aksh.fabcalc.settings.ColorSettingsFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-        </android.support.v7.widget.CardView>
+                </FrameLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
 
         <android.support.v7.widget.CardView android:id="@+id/navbar_card_view"
             style="@style/CardView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.2"
+            android:layout_height="64dp"
+            android:layout_gravity=""
             app:cardBackgroundColor="@{colors.secondaryColor}"
             app:cardElevation="2dp"
             app:cardPreventCornerOverlap="false"

@@ -4,12 +4,14 @@ import static com.aksh.fabcalc.utils.AnimationUtils.revealFromXY;
 
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -21,6 +23,7 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 public class SettingsActivity extends AppCompatActivity implements
         ColorPickerDialogListener{
 
+    private static final String TAG = SettingsActivity.class.getSimpleName();
     ActivitySettingsBinding calcSettings;
     Setting currentSetting;
 
@@ -37,7 +40,11 @@ public class SettingsActivity extends AppCompatActivity implements
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_calc:
-                                onBackPressed();
+                                if (currentSetting == Setting.GENERAL) {
+                                    onBackPressed();
+                                } else {
+                                    switchToSetting(Setting.GENERAL);
+                                }
                                 break;
                             case R.id.action_theme:
                                 switchToSetting(Setting.THEME);
@@ -56,18 +63,7 @@ public class SettingsActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
         applyColors();
-
-        int childCount = calcSettings.settingsMainLayout.getChildCount();
-        for(int i=0; i<childCount; i++) {
-            final View myView = calcSettings.settingsMainLayout.getChildAt(i);
-            myView.post(new Runnable() {
-                @Override
-                public void run() {
-                    // TODO: 19-07-2017 Fix This (Add bottombar to settings which stays stationary?)
-                    revealFromXY(myView, myView.getLeft(), myView.getBottom());
-                }
-            });
-        }
+        animateComponents();
     }
 
     private void applyColors() {
@@ -76,6 +72,29 @@ public class SettingsActivity extends AppCompatActivity implements
             getWindow().setStatusBarColor(ColorUtils.currentColors.getPrimaryColorDark());
             getWindow().setNavigationBarColor(ColorUtils.currentColors.getPrimaryColorDark());
         }
+    }
+
+    private void animateComponents() {
+        calcSettings.navbarCardView.post(new Runnable() {
+            @Override
+            public void run() {
+                revealFromXY(
+                        calcSettings.navbarCardView,
+                        calcSettings.navbarCardView.getRight(),
+                        calcSettings.navbarCardView.getBottom()
+                );
+            }
+        });
+        calcSettings.settingsLinearLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                revealFromXY(
+                        calcSettings.settingsLinearLayout,
+                        calcSettings.settingsLinearLayout.getRight(),
+                        calcSettings.settingsLinearLayout.getBottom()
+                );
+            }
+        });
     }
 
     @Override
@@ -99,11 +118,36 @@ public class SettingsActivity extends AppCompatActivity implements
 
     @Override
     public void onDialogDismissed(int dialogId) {
+        onResume();
     }
 
     private void switchToSetting(Setting destSetting) {
         getFrameLayoutForSetting(currentSetting).setVisibility(View.GONE);
         getFrameLayoutForSetting(destSetting).setVisibility(View.VISIBLE);
+        Rect bottombarRect = new Rect();
+        calcSettings.options.bottombar.getGlobalVisibleRect(bottombarRect);
+        int x0 = bottombarRect.left;
+        int x1 = bottombarRect.left + bottombarRect.right / 3;
+        int x2 = bottombarRect.left + 2 * bottombarRect.right / 3;
+        int x3 = bottombarRect.right;
+        int x = 0;
+        switch (destSetting) {
+            case GENERAL: x = (x0 + x1) / 2; break;
+            case THEME: x = (x1 + x2) / 2; break;
+            case COLOR: x = (x2 + x3) / 2; break;
+        }
+        int y = (bottombarRect.top + bottombarRect.bottom) / 2;
+//        int itemNo = 0;
+//        switch (destSetting) {
+//            case GENERAL: itemNo = 0; break;
+//            case THEME: itemNo = 1; break;
+//            case COLOR: itemNo = 2; break;
+//        }
+//        Rect itemRect = getBottombarItemRect(itemNo);
+//        int x = (itemRect.left + itemRect.right) / 2;
+//        int y = (itemRect.top + itemRect.bottom) / 2;
+//        Log.d(TAG, "switchToSetting: x:" + x);
+        revealFromXY(calcSettings.settingsLinearLayout, x, y);
         currentSetting = destSetting;
     }
 
@@ -116,13 +160,18 @@ public class SettingsActivity extends AppCompatActivity implements
         return null;
     }
 
+    private Rect getBottombarItemRect(int itemNo) {
+        Rect itemRect = new Rect();
+        View itemView = calcSettings.options.bottombar.getMenu().getItem(itemNo).getActionView();
+        itemView.getGlobalVisibleRect(itemRect);
+        Log.d(TAG, "getBottombarItemRect: " + itemRect.left + " " + itemRect.right);
+        return itemRect;
+    }
+
     @Override
-    public void onBackPressed() {
-        if (currentSetting == Setting.GENERAL) {
-            super.onBackPressed();
-        } else {
-            switchToSetting(Setting.GENERAL);
-        }
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     enum Setting {

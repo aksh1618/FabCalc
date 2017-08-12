@@ -11,8 +11,10 @@ import static com.aksh.fabcalc.utils.LabelsUtils.inputLabels;
 import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aksh.fabcalc.R;
 import com.aksh.fabcalc.databinding.ActivityMainBinding;
@@ -39,16 +41,18 @@ public class ClickListeners {
             insert(inputEditText, keyText);
             resultPrev.setVisibility(View.VISIBLE);
             equalPressed = false;
+            updatePreview(resultPrev, getEvaluableString(inputEditText.getText(), context));
         } else if (keyText.equals(context.getString(R.string.key_clear))) {
             if (equalPressed) {
                 if (inputEditText.getText().length() > 0)
-                    resetDisplay(context, calc, view);
+                    resetDisplay(calc, view);
             } else if (inputEditText.getText().length() < 2) {
                 inputEditText.setText("");
-                resultPrev.setText(context.getString(R.string.key_num_zero));
+                resultPrev.setText("");
                 resultPrev.setVisibility(View.GONE);
             } else {
                 backspace(inputEditText);
+                updatePreview(resultPrev, getEvaluableString(inputEditText.getText(), context));
             }
         } else { // If equal is pressed
             equalPressed = true;
@@ -60,11 +64,11 @@ public class ClickListeners {
                     // TODO: 24-07-2017 If exception is caught, show error in prev, not input.
                 } catch (IllegalArgumentException iae) { // Invalid Expression
                     result = "Not A Number !!";
-                    Log.w(TAG, "onKeyClicked: " + iae.getStackTrace().toString(), iae);
+                    Log.w(TAG, "onKeyClicked: " + iae.getStackTrace(), iae);
                 } catch (ArithmeticException ae) { // Division By Zero
                     // TODO: 05-07-2017 Show infinity?
                     result = "Division by zero XP";
-                    Log.w(TAG, "onKeyClicked: " + ae.getStackTrace().toString(), ae);
+                    Log.w(TAG, "onKeyClicked: " + ae.getStackTrace(), ae);
                 }
                 inputEditText.setText("");
                 inputEditText.append(result);
@@ -72,8 +76,9 @@ public class ClickListeners {
                 // TODO: 19-07-2017 Do something bout this
 //                AnimationUtils.animatePreviewToResult(resultPrev, inputEditText);
             }
+            resultPrev.setText("");
             resultPrev.setVisibility(View.GONE);
         }
-        updatePreview(resultPrev, getEvaluableString(inputEditText.getText(), context));
+//        updatePreview(resultPrev, getEvaluableString(inputEditText.getText(), context));
     }
 }

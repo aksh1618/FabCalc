@@ -24,140 +24,140 @@
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab1"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab2"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab3"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab4"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1" />
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab5"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab6"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab7"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab8"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab9"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab10"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab11"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab12"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab13"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab14"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab15"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab16"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab17"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab18"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab19"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 
         <com.aksh.fabcalc.utils.MyFab android:id="@+id/myFab20"
             app:backgroundTintList="@{keyColorList}"
             app:rippleColor="@{rippleColor}"
-            style="@style/FabStyleBelow21"
+            style="@style/FabStylePortrait"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"/>
 

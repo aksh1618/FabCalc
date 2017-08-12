@@ -5,10 +5,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="preferenceTheme">@style/PreferenceTheme</item>
         <!--<item name="android:windowBackground">@android:color/transparent</item>-->
         <!--<item name="android:windowIsTranslucent">true</item>-->
         <!--<item name="android:background">#0FBDBDBD</item>-->
+    </style>
+
+    <style name="SettingsTheme" parent="AppTheme">
+        <item name="preferenceTheme">@style/PreferenceTheme</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!--<item name="android:background">#66666666</item>-->
     </style>
 
     <style name="PreferenceTheme" parent="PreferenceThemeOverlay.v14.Material">
@@ -19,17 +25,29 @@
     </style>
 
     <style name="FabStyleBelow21" parent="Widget.Design.FloatingActionButton">
-        <item name="elevation">6dp</item>
-        <item name="pressedTranslationZ">12dp</item>
+        <item name="elevation">@dimen/fab_elevation</item>
+        <item name="pressedTranslationZ">@dimen/fab_pressed_elevation</item>
         <item name="android:alpha">0</item>
         <item name="android:scaleX">0.5</item>
         <item name="android:scaleY">0.5</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:layout_marginTop">7dp</item>
-        <item name="android:layout_marginBottom">7dp</item>
-        <item name="android:layout_marginLeft">12dp</item>
-        <item name="android:layout_marginRight">12dp</item>
         <item name="drawableText">"YO"</item>
+        <item name="android:onClick">fabOnClick</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_width">0dp</item>
+    </style>
+
+    <style name="FabStylePortrait" parent="FabStyleBelow21">
+        <item name="android:layout_marginTop">@dimen/portrait_fab_vertical_layout_margin</item>
+        <item name="android:layout_marginBottom">@dimen/portrait_fab_vertical_layout_margin</item>
+        <item name="android:layout_marginLeft">@dimen/portrait_fab_horizontal_layout_margin</item>
+        <item name="android:layout_marginRight">@dimen/portrait_fab_horizontal_layout_margin</item>
+    </style>
+
+    <style name="FabStyleLandscape" parent="FabStyleBelow21">
+        <item name="android:layout_marginTop">@dimen/landscape_fab_vertical_layout_margin</item>
+        <item name="android:layout_marginBottom">@dimen/landscape_fab_vertical_layout_margin</item>
+        <item name="android:layout_marginLeft">@dimen/landscape_fab_horizontal_layout_margin</item>
+        <item name="android:layout_marginRight">@dimen/landscape_fab_horizontal_layout_margin</item>
     </style>
 
 </resources>

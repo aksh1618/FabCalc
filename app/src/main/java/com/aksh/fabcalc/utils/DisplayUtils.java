@@ -53,9 +53,9 @@ public class DisplayUtils {
                 "", 0, 0);
     }
 
-    public static void resetDisplay(Context context, ActivityMainBinding calc, View view) {
+    public static void resetDisplay(ActivityMainBinding calc, View view) {
         calc.display.inputEditText.setText("");
-        calc.display.resultTextView.setText(context.getString(R.string.key_num_zero));
+        calc.display.resultTextView.setText("");
         calc.display.resultTextView.setVisibility(View.GONE);
         // TODO: 27-06-2017 change color for reveal anim?
         int coords[] = new int[2];

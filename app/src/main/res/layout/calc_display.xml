@@ -31,7 +31,7 @@
             android:gravity="end|bottom"
             android:textSize="70sp"
             android:maxLines="4"
-            android:cursorVisible="false"
+            android:textCursorDrawable="@null"
             android:hint="@string/key_num_zero" />
 
         <TextView
@@ -43,8 +43,7 @@
             android:textColor="@{textColor}"
             android:textAlignment="viewEnd"
             android:gravity="end|center"
-            android:textSize="20sp"
-            android:text="@string/key_num_zero" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 </layout>

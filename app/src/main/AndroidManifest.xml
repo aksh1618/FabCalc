@@ -15,8 +15,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+            android:launchMode="singleTop">
 
             <!-- TODO: Remove orientation after making custom landscape layout -->
             <intent-filter>
@@ -28,7 +27,8 @@
         </activity>
         <!--TODO: Label required?-->
         <activity android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/SettingsTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>

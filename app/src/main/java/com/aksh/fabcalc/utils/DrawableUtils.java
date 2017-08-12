@@ -20,11 +20,11 @@ public class DrawableUtils {
 
     public DrawableUtils(Context context) {
         mContext = context;
-        Resources res = mContext.getResources();
+//        Resources res = mContext.getResources();
         mBuilder = TextDrawable.builder()
                 .beginConfig()
-                .textColor(ColorUtils.currentColors.getTextColor())
-                .fontSize(res.getDimensionPixelSize(R.dimen.short_label_text_size))
+//                .textColor(ColorUtils.currentColors.getTextColor())
+//                .fontSize(res.getDimensionPixelSize(R.dimen.short_label_text_size))
                 .useFont(Typeface.SANS_SERIF)
                 .bold()
                 .endConfig();
@@ -36,13 +36,15 @@ public class DrawableUtils {
     }
 
     TextDrawable getTextDrawable(String text) {
+        int fontSize = mContext.getResources().getDimensionPixelSize(R.dimen.short_label_text_size);
         if (text.length() > 1) {
-            int newFontSize = mContext.getResources().getDimensionPixelSize(R.dimen.medium_label_text_size);
-            if(text.length() > 3) newFontSize = mContext.getResources().getDimensionPixelSize(R.dimen.long_label_text_size);
-            mBuilder.beginConfig()
-                    .fontSize(newFontSize)
-                    .endConfig();
+            fontSize = mContext.getResources().getDimensionPixelSize(R.dimen.medium_label_text_size);
+            if(text.length() > 3) fontSize = mContext.getResources().getDimensionPixelSize(R.dimen.long_label_text_size);
         }
+        mBuilder.beginConfig()
+                .fontSize(fontSize)
+                .textColor(ColorUtils.currentColors.getTextColor())
+                .endConfig();
         return mBuilder.buildRound(text, Color.TRANSPARENT);
     }
 }

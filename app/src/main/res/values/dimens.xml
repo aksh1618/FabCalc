@@ -3,4 +3,11 @@
     <dimen name="short_label_text_size">28sp</dimen>
     <dimen name="medium_label_text_size">20sp</dimen>
     <dimen name="long_label_text_size">16sp</dimen>
+    <dimen name="card_view_padding">2dp</dimen>
+    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="fab_pressed_elevation">12dp</dimen>
+    <dimen name="portrait_fab_horizontal_layout_margin">12dp</dimen>
+    <dimen name="portrait_fab_vertical_layout_margin">7dp</dimen>
+    <dimen name="landscape_fab_horizontal_layout_margin">6dp</dimen>
+    <dimen name="landscape_fab_vertical_layout_margin">4dp</dimen>
 </resources>

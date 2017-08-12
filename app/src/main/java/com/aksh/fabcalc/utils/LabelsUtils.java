@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.aksh.fabcalc.R;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class LabelsUtils {
     static List<String> inputLabels;
     private static List<String> basicLabels;
     private static List<String> advancedLabels;
+    private static List<String> landscapeLabels;
     static List<String> parenFunctions;
     static List<String> trigonometricFunctions;
 
@@ -25,6 +27,8 @@ public class LabelsUtils {
         inputLabels = Arrays.asList(context.getResources().getStringArray(R.array.input_labels));
         basicLabels = Arrays.asList(context.getResources().getStringArray(R.array.basic_labels));
         advancedLabels = Arrays.asList(context.getResources().getStringArray(R.array.advanced_labels));
+//        (landscapeLabels = new ArrayList<>(basicLabels)).addAll(advancedLabels);
+        landscapeLabels = Arrays.asList(context.getResources().getStringArray(R.array.landscape_labels));
         parenFunctions = Arrays.asList(context.getResources().getStringArray(R.array.paren_functions));
 //        trigonometricFunctions = Arrays.asList(context.getResources().getStringArray(R.array.trigonometric_functions));
     }
@@ -39,6 +43,9 @@ public class LabelsUtils {
                     break;
                 case ADVANCED:
                     myFab.setDrawableText(advancedLabels.get(i));
+                    break;
+                case LANDSCAPE:
+                    myFab.setDrawableText(landscapeLabels.get(i));
                     break;
             }
         }

@@ -25,7 +25,7 @@
             android:layout_height="0dp"
             android:layout_weight="3"
             app:cardBackgroundColor="@{colors.secondaryColor}"
-            app:cardElevation="2dp"
+            app:cardElevation="@dimen/cardview_default_elevation"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="true">
 
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:cardBackgroundColor="@{colors.primaryColor}"
-                app:cardElevation="2dp"
+                app:cardElevation="@dimen/cardview_default_elevation"
                 app:cardPreventCornerOverlap="false">
 
                 <android.support.v7.widget.RecyclerView android:id="@+id/history_recycler_view"
@@ -72,10 +72,9 @@
         <android.support.v7.widget.CardView android:id="@+id/navbar_card_view"
             style="@style/CardView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.2"
+            android:layout_height="64dp"
             app:cardBackgroundColor="@{colors.secondaryColor}"
-            app:cardElevation="2dp"
+            app:cardElevation="@dimen/cardview_default_elevation"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="true">
 

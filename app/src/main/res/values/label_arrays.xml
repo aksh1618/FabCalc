@@ -71,42 +71,91 @@
         <item>@string/key_num_seven</item>
         <item>@string/key_num_eight</item>
         <item>@string/key_num_nine</item>
-        <item>@string/key_plus</item>
+        <item>@string/key_divide</item>
         <item>@string/key_num_four</item>
         <item>@string/key_num_five</item>
         <item>@string/key_num_six</item>
-        <item>@string/key_minus</item>
+        <item>@string/key_multiply</item>
         <item>@string/key_num_one</item>
         <item>@string/key_num_two</item>
         <item>@string/key_num_three</item>
-        <item>@string/key_multiply</item>
+        <item>@string/key_minus</item>
         <item>@string/key_point</item>
         <item>@string/key_num_zero</item>
         <item>@string/key_equal</item>
-        <item>@string/key_divide</item>
+        <item>@string/key_plus</item>
     </string-array>
 
     <!--20 Advanced Keys-->
     <string-array name="advanced_labels">
         <item>@string/key_paren_open</item>
         <item>@string/key_paren_close</item>
-        <item>@string/key_degree</item>
+        <item>@string/key_factorial</item>
         <item>@string/key_clear</item>
         <item>@string/key_sin</item>
         <item>@string/key_cos</item>
         <item>@string/key_tan</item>
-        <item>@string/key_factorial</item>
+        <item>@string/key_degree</item>
         <item>@string/key_asin</item>
         <item>@string/key_acos</item>
         <item>@string/key_atan</item>
-        <item>@string/key_sqrt</item>
-        <item>@string/key_square</item>
-        <item>@string/key_cube</item>
-        <item>@string/key_exponent</item>
-        <item>@string/key_euler</item>
+        <item>@string/key_pi</item>
         <item>@string/key_log_natural</item>
         <item>@string/key_log_base_10</item>
         <item>@string/key_log_base_b</item>
-        <item>@string/key_pi</item>
+        <item>@string/key_euler</item>
+        <item>@string/key_square</item>
+        <item>@string/key_cube</item>
+        <item>@string/key_exponent</item>
+        <item>@string/key_sqrt</item>
     </string-array>
+
+    <!--40 Landscape Labels-->
+    <string-array name="landscape_labels">
+        <!--Row 1-->
+        <item>@string/placeholder</item>
+        <item>@string/key_sin</item>
+        <item>@string/key_cos</item>
+        <item>@string/key_tan</item>
+        <item>@string/key_degree</item>
+        <item>@string/key_num_seven</item>
+        <item>@string/key_num_eight</item>
+        <item>@string/key_num_nine</item>
+        <item>@string/key_divide</item>
+        <item>@string/key_clear</item>
+        <!--Row 2-->
+        <item>@string/placeholder</item>
+        <item>@string/key_asin</item>
+        <item>@string/key_acos</item>
+        <item>@string/key_atan</item>
+        <item>@string/key_pi</item>
+        <item>@string/key_num_four</item>
+        <item>@string/key_num_five</item>
+        <item>@string/key_num_six</item>
+        <item>@string/key_multiply</item>
+        <item>@string/key_paren_open</item>
+        <!--Row 3-->
+        <item>@string/placeholder</item>
+        <item>@string/key_log_natural</item>
+        <item>@string/key_log_base_10</item>
+        <item>@string/key_log_base_b</item>
+        <item>@string/key_euler</item>
+        <item>@string/key_num_one</item>
+        <item>@string/key_num_two</item>
+        <item>@string/key_num_three</item>
+        <item>@string/key_minus</item>
+        <item>@string/key_paren_close</item>
+        <!--Row 4-->
+        <item>@string/key_factorial</item>
+        <item>@string/key_square</item>
+        <item>@string/key_cube</item>
+        <item>@string/key_exponent</item>
+        <item>@string/key_sqrt</item>
+        <item>@string/key_point</item>
+        <item>@string/key_num_zero</item>
+        <item>@string/key_percentage</item>
+        <item>@string/key_plus</item>
+        <item>@string/key_equal</item>
+    </string-array>
+
 </resources>
