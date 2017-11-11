@@ -39,7 +39,6 @@ public class ClickListeners {
 
         if (inputLabels.contains(keyText)) {
             insert(inputEditText, keyText);
-            resultPrev.setVisibility(View.VISIBLE);
             equalPressed = false;
             updatePreview(resultPrev, getEvaluableString(inputEditText.getText(), context));
         } else if (keyText.equals(context.getString(R.string.key_clear))) {
@@ -80,5 +79,9 @@ public class ClickListeners {
             resultPrev.setVisibility(View.GONE);
         }
 //        updatePreview(resultPrev, getEvaluableString(inputEditText.getText(), context));
+    }
+
+    public static void setEqualPressed(boolean equalPressed) {
+        ClickListeners.equalPressed = equalPressed;
     }
 }

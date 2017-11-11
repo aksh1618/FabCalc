@@ -167,7 +167,7 @@ public class CalculationUtils {
         return myBigDecimal.toString();
     }
 
-    static String getEvaluableString(Editable text, Context context) {
+    public static String getEvaluableString(Editable text, Context context) {
         return balanceParens(text.toString()
                 .replace(context.getString(R.string.key_plus), "+")
                 .replace(context.getString(R.string.key_minus), "-")

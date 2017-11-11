@@ -17,7 +17,7 @@ import com.autofit.et.lib.AutoFitEditText;
  */
 
 public class DisplayUtils {
-    static void updatePreview(TextView resultPrev, String stringToEvaluate) {
+    public static void updatePreview(TextView resultPrev, String stringToEvaluate) {
         String resultText = resultPrev.getText().toString();
         try {
             resultText = evaluate(stringToEvaluate);
@@ -27,6 +27,7 @@ public class DisplayUtils {
             }
         } finally {
             resultPrev.setText(resultText);
+            resultPrev.setVisibility(View.VISIBLE);
         }
     }
 

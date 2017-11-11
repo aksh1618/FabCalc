@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="clipboard_eval"
+        android:enabled="true"
+        android:icon="@drawable/ic_fabcalc_concise"
+        android:shortcutShortLabel="@string/shortcut_clipboard_eval">
+        <intent
+            android:action="com.aksh.fabcalc.CLIPBOARD_EVAL"
+            android:targetPackage="com.aksh.fabcalc"
+            android:targetClass="com.aksh.fabcalc.MainActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

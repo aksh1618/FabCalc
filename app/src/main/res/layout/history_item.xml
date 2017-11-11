@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="item"
@@ -25,7 +26,8 @@
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@{cardColor}"
             app:cardElevation="2dp"
-            app:cardPreventCornerOverlap="false">
+            app:cardPreventCornerOverlap="false"
+            tools:cardBackgroundColor="@color/colorAccent">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -40,7 +42,10 @@
                     android:layout_height="wrap_content"
                     android:text="@{item.expression}"
                     android:textSize="20sp"
-                    android:textColor="@{textColor}" />
+                    android:textColor="@{textColor}"
+                    android:layout_margin="4dp"
+                    tools:text="12+3-26*sin(50)"
+                    tools:textColor="@color/colorWhite"/>
 
                 <TextView
                     android:id="@+id/history_item_result_text_view"
@@ -50,7 +55,10 @@
                     android:textAlignment="viewEnd"
                     android:gravity="end|center"
                     android:textSize="20sp"
-                    android:textColor="@{textColor}" />
+                    android:textColor="@{textColor}"
+                    android:layout_margin="4dp"
+                    tools:text="21.8217461963022"
+                    tools:textColor="@color/colorWhite"/>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>

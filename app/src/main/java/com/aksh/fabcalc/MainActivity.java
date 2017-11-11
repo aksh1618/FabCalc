@@ -6,10 +6,14 @@ import static com.aksh.fabcalc.utils.AnimationUtils.animateButtonsOut;
 import static com.aksh.fabcalc.utils.AnimationUtils.animateKeysToState;
 import static com.aksh.fabcalc.utils.AnimationUtils.revealFromCenter;
 import static com.aksh.fabcalc.utils.AnimationUtils.revealFromXY;
+import static com.aksh.fabcalc.utils.CalculationUtils.getEvaluableString;
 import static com.aksh.fabcalc.utils.ClickListeners.onKeyClicked;
+import static com.aksh.fabcalc.utils.DisplayUtils.updatePreview;
 import static com.aksh.fabcalc.utils.LabelsUtils.applyLabels;
 import static com.aksh.fabcalc.utils.LabelsUtils.initArrays;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.BindingAdapter;
@@ -22,6 +26,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
@@ -45,7 +50,9 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String PREVIEW_KEY = "preview";
+    private static final String ACTION_CLIPBOARD_EVAL = "com.aksh.fabcalc.CLIPBOARD_EVAL";
+
+    private final String PREVIEW_KEY = "preview";
 
     ActivityMainBinding calc;
     BasicCalcKeysBinding keys;
@@ -97,6 +104,28 @@ public class MainActivity extends AppCompatActivity {
                 display.resultTextView.setText(savedInstanceState.getString(PREVIEW_KEY));
             }
         }
+
+        if (ACTION_CLIPBOARD_EVAL.equals(getIntent().getAction())) {
+            evalClipboardText();
+        }
+    }
+
+    private void evalClipboardText() {
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        ClipData clip;
+        if (clipboardManager != null) {
+            clip = clipboardManager.getPrimaryClip();
+        } else return;
+        CharSequence copiedExpression = clip.getItemAt(0).getText();
+        display.inputEditText.setText(copiedExpression);
+        updatePreview(display.resultTextView, getEvaluableString(display.inputEditText.getText(), this));
+        // TODO: 02-09-2017 Try this:
+//        mybutton.post(new Runnable(){
+//            @Override
+//            public void run() {
+//                mybutton.performClick();
+//            }
+//        });
     }
 
     @Override
@@ -173,7 +202,9 @@ public class MainActivity extends AppCompatActivity {
                     R.drawable.ic_settings,
                     null
             );
-            settingsIcon = DrawableCompat.wrap(settingsIcon);
+            if (settingsIcon != null) {
+                settingsIcon = DrawableCompat.wrap(settingsIcon);
+            } else return;
             DrawableCompat.setTint(settingsIcon, ColorUtils.currentColors.getTextColor());
             keys.myFab1.setImageDrawable(settingsIcon);
         }
@@ -183,13 +214,17 @@ public class MainActivity extends AppCompatActivity {
         calc.displayCardView.post(new Runnable() {
             @Override
             public void run() {
-                revealFromCenter(calc.displayCardView);
+                if (ViewCompat.isAttachedToWindow(calc.displayCardView)) {
+                    revealFromCenter(calc.displayCardView);
+                }
             }
         });
         calc.centralFrameLayout.post(new Runnable() {
             @Override
             public void run() {
-                revealFromCenter(calc.centralFrameLayout);
+                if (ViewCompat.isAttachedToWindow(calc.centralFrameLayout)) {
+                    revealFromCenter(calc.centralFrameLayout);
+                }
             }
         });
         if (calcState != State.LANDSCAPE) {
@@ -197,7 +232,10 @@ public class MainActivity extends AppCompatActivity {
             final int y = (calc.navbarCardView.getBottom() + calc.navbarCardView.getTop()) / 2;
             calc.navbarCardView.post(new Runnable() {
                 @Override
-                public void run() {revealFromXY(calc.navbarCardView, x, y);
+                public void run() {
+                    if (ViewCompat.isAttachedToWindow(calc.navbarCardView)) {
+                        revealFromXY(calc.navbarCardView, x, y);
+                    }
                 }
             });
         }

@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.aksh.fabcalc.databinding.ActivitySettingsBinding;
 import com.aksh.fabcalc.utils.ColorUtils;
@@ -34,6 +35,12 @@ public class SettingsActivity extends AppCompatActivity implements
         currentSetting = Setting.GENERAL;
         // TODO: 05-07-2017 Up Navigation and home button?
 
+        calcSettings.settingsLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         calcSettings.options.bottombar.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override

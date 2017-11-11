@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Fab Calc</string>
     <string name="placeholder">YO</string>
+    <string name="shortcut_clipboard_eval">Evaluate Copied Expression</string>
 
     <!--==================================KEYS BEGIN========================================-->
 
