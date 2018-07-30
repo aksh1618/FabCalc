@@ -8,8 +8,11 @@ import static com.aksh.fabcalc.utils.DisplayUtils.insert;
 import static com.aksh.fabcalc.utils.DisplayUtils.updatePreview;
 import static com.aksh.fabcalc.utils.LabelsUtils.inputLabels;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.ContentValues;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +24,7 @@ import com.aksh.fabcalc.databinding.ActivityMainBinding;
 import com.aksh.fabcalc.history.HistoryContract;
 import com.aksh.fabcalc.history.HistoryProvider;
 import com.autofit.et.lib.AutoFitEditText;
+import com.shazam.android.widget.text.reflow.ReflowTextAnimatorHelper;
 
 /**
  * Created by Aakarshit on 16-06-2017.
@@ -34,8 +38,8 @@ public class ClickListeners {
 
     public static void onKeyClicked(Context context, View view, ActivityMainBinding calc){
         String keyText = ((MyFab)view).getText();
-        AutoFitEditText inputEditText = calc.display.inputEditText;
-        TextView resultPrev = calc.display.resultTextView;
+        final AutoFitEditText inputEditText = calc.display.inputEditText;
+        final TextView resultPrev = calc.display.resultTextView;
 
         if (inputLabels.contains(keyText)) {
             insert(inputEditText, keyText);
@@ -72,11 +76,34 @@ public class ClickListeners {
                 inputEditText.setText("");
                 inputEditText.append(result);
                 HistoryContract.insertRecord(finalExpression, result, context);
+
+                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR2){
+                    Animator resultAnimator = new ReflowTextAnimatorHelper
+                            .Builder(resultPrev,inputEditText)
+                            .withDuration(250,300)
+                            .withVelocity(1500)
+                            .buildAnimator();
+                    resultAnimator.addListener(new AnimatorListenerAdapter(){
+                        @Override
+                        public void onAnimationStart(Animator animation){
+//                            resultPrev.setVisibility(View.GONE);
+                            inputEditText.setVisibility(View.INVISIBLE);
+                        }
+                        @Override
+                        public void onAnimationEnd(Animator animation){
+                            inputEditText.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    resultAnimator.start();
+                } else {
+                    resultPrev.setText("");
+                    resultPrev.setVisibility(View.GONE);
+                }
                 // TODO: 19-07-2017 Do something bout this
 //                AnimationUtils.animatePreviewToResult(resultPrev, inputEditText);
             }
-            resultPrev.setText("");
-            resultPrev.setVisibility(View.GONE);
+//            resultPrev.setText("");
+//            resultPrev.setVisibility(View.GONE);
         }
 //        updatePreview(resultPrev, getEvaluableString(inputEditText.getText(), context));
     }

@@ -188,6 +188,9 @@ public class CalculationUtils {
             if (c == '(') parensToAdd++;
             else if (c == ')') parensToAdd--;
         }
+        if (parensToAdd == 0) {
+            return string;
+        }
         StringBuilder stringBuilder = new StringBuilder(string);
         while (parensToAdd-- != 0) stringBuilder.append(')');
         string = stringBuilder.toString();

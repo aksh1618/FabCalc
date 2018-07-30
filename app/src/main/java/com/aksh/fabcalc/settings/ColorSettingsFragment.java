@@ -71,7 +71,7 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements
         Preference textColorPreference =
                 manager.findPreference(getString(R.string.pref_color_text_key));
         textColorPreference.setDefaultValue(
-                ResourcesCompat.getColor(getResources(), R.color.colorBlack, null));
+                ResourcesCompat.getColor(getResources(), R.color.colorWhite, null));
         textColorPreference.setOnPreferenceClickListener(
                 new Preference.OnPreferenceClickListener() {
                     @Override
@@ -79,7 +79,7 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements
                         ColorPickerDialog.newBuilder()
                                 .setColor(getPreferenceScreen().getSharedPreferences().getInt(
                                         getString(R.string.pref_color_text_key),
-                                        ResourcesCompat.getColor(getResources(), R.color.colorBlack, null)
+                                        ResourcesCompat.getColor(getResources(), R.color.colorWhite, null)
                                 ))
                                 .setDialogId(TEXT_COLOR_DIALOG_ID)
                                 .show(getActivity());

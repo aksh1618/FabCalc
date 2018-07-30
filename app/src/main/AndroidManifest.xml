@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.aksh.fabcalc"
-    android:versionCode="1"
-    android:versionName="1.0">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.aksh.fabcalc">
+
+    <uses-sdk tools:overrideLibrary="com.shazam.android.widget.text.reflow"/>
 
     <application
         android:name=".FabCalc"

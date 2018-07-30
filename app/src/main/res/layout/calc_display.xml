@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -32,7 +33,8 @@
             android:textSize="70sp"
             android:maxLines="4"
             android:textCursorDrawable="@null"
-            android:hint="@string/key_num_zero" />
+            android:hint="@string/key_num_zero"
+            tools:text="12X5"/>
 
         <TextView
             android:id="@+id/result_text_view"
@@ -43,7 +45,9 @@
             android:textColor="@{textColor}"
             android:textAlignment="viewEnd"
             android:gravity="end|center"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            tools:visibility="visible"
+            tools:text="60"/>
 
     </LinearLayout>
 </layout>
